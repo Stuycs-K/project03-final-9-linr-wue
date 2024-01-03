@@ -2,14 +2,16 @@
 
 ## Group Members:
 
-names here.
+Ruize Lin and Eric Wu
        
 # Intentions:
 
+Writing a simple database program.
 A statement of the problem you are solving and/or a high level description of the project.
     
 # Intended usage:
 
+The project will be used to send data to a database program and also retrieve the data. 
 A description as to how the project will be used (describe the user interface).
   
 # Technical Details:
