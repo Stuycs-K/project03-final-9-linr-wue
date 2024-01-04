@@ -33,6 +33,8 @@ What algorithms and /or data structures you will be using, and how.
 
 A timeline with expected completion dates of parts of the project.
 
+Makefile and all files set up by Thursday 1/3/24.
+
 Basic network and semaphore set up by Monday 1/8/24.
 
 Basic database commands to be done by Monday 1/8/24.
