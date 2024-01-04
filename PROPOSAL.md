@@ -22,7 +22,7 @@ We aren't sure what data structures or algorithms we will be using yet.
 
 A timeline with expected completion dates of parts of the project.
 
-Makefile and all files set up by Thursday 1/3/24.
+Makefile and all files set up by Thursday 1/4/24.
 
 Basic network and semaphore set up by Monday 1/8/24.
 
