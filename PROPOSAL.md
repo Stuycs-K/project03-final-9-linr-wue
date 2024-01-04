@@ -16,6 +16,8 @@ A description as to how the project will be used (describe the user interface).
   
 # Technical Details:
 
+First, we will be using a client and server using sockets that will be the medium of communicating to the database. The client can write out different commands to access the database and retrieve information or add information to it. A subserver will be handling all the logic with the database and client and we will use a semaphore so that only one client can access the server at a time.
+
 A description of your technical design. This should include:
    
 How you will be using the topics covered in class in the project.
