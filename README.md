@@ -3,7 +3,7 @@
 
 ### GROUP NAME HERE
 
-Group Members Here
+Ruize Lin, Eric Wu
        
 ### Project Description:
 
