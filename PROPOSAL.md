@@ -18,16 +18,6 @@ The project will be used to send data to a database program and also retrieve th
 First, we will be using a client and server using sockets that will be the medium of communicating to the database. The client can write out different commands to access the database and retrieve information or add information to it. A subserver will be handling all the logic with the database and client and we will use a semaphore so that only one client can access the server at a time.
 For now, Ruize will be responsible for accessing the database and setting up the commands, and Eric will be responsible for setting up the network and semaphore.
 We aren't sure what data structures or algorithms we will be using yet. 
-
-A description of your technical design. This should include:
-   
-How you will be using the topics covered in class in the project.
-     
-How you are breaking down the project and who is responsible for which parts.
-  
-What data structures you will be using and how.
-     
-What algorithms and /or data structures you will be using, and how.
     
 # Intended pacing:
 
