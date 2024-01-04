@@ -7,7 +7,6 @@ Ruize Lin and Eric Wu
 # Intentions:
 
 Writing a simple database program.
-A statement of the problem you are solving and/or a high level description of the project.
     
 # Intended usage:
 
