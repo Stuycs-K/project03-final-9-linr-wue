@@ -32,5 +32,7 @@ What algorithms and /or data structures you will be using, and how.
 # Intended pacing:
 
 A timeline with expected completion dates of parts of the project.
+
 Basic network and semaphore set up by Monday 1/8/24.
+
 Basic database commands to be done by Monday 1/8/24.
