@@ -13,12 +13,25 @@ int read(int server_socket) {
 }
 
 // update database in the server with user prompt
-int update(int server_socket) {
+int edit(int server_socket) {
     char buffer[MAX];
-    printf("Enter");
+    // Operation prompt
+    printf("Enter the operation (add, update, delete) you would like to perform\n: ");
     fgets(buffer, MAX, stdin);
+    
+
     write(server_socket, buffer, MAX);
     return 0;
+}
+// helper functions
+void delete() {
+
+}
+void add() {
+
+}
+void update() {
+
 }
 
 //______________________________FILE_MANIPULATION______________________________
