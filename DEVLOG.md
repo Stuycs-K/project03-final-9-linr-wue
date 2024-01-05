@@ -8,6 +8,11 @@ Expanded description including how much time was spent on task.
 ### 2024-01-03 - Brief description
 Expanded description including how much time was spent on task.
 
+### 2024-01-04 - Working on read and edit command for client
+25 min - discussing and setting up the files we will need for the project.
+15 min - working on read command.
+45 min - working on write command.
+
 ## Eric Wu
 
 ### 2024-01-04 - Setting up project; reviewing code
