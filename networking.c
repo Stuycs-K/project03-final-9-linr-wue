@@ -42,6 +42,7 @@ int server_tcp_handshake(int listen_socket){
 
 /*Create and bind a socket.
 * Place the socket in a listening state.
+* Creates semaphore
 */
 int server_setup() {
   //setup structs for getaddrinfo
@@ -67,6 +68,27 @@ int server_setup() {
   //free the structs used by getaddrinfo
   free(hints);
   freeaddrinfo(results);
+
+  //Server creates semaphore
+  int v, r;
+  int semd = semget(KEY, 1, IPC_CREAT | IPC_EXCL | 0644); //Creating the semaphore
+  if (semd == -1) { //Error in semaphore
+    printf("error %d: %s\n", errno, strerror(errno));
+    semd = semget(KEY, 1, 0);
+    v = semctl(semd, 0, GETVAL, 0); 
+    printf("semctl returned: %d\n", v); //Semaphore id will be 1
+  }
+  else { //No error in semaphore
+    union semun us;
+    us.val = 1;
+    r = semctl(semd, 0, SETVAL, us);
+    printf("semctl returned: %d\n", r); //setting semaphore value to 1
+  }
+  int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Creating the shared memory
+
+  //int w_file = open("story.txt", O_RDWR | O_TRUNC | O_CREAT, 0666); //Opening a file for story
+  
+  printf("Semaphore created\n");
   
   return clientd;
 }
