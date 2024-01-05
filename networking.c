@@ -1,5 +1,13 @@
 #include "networking.h"
 
+union semun { 
+   int              val;    /* Value for SETVAL */
+   struct semid_ds *buf;    /* Buffer for IPC_STAT, IPC_SET */
+   unsigned short  *array;  /* Array for GETALL, SETALL */
+   struct seminfo  *__buf;  /* Buffer for IPC_INFO */
+                            /* (Linux-specific) */
+};
+
 /*Connect to the server
  *return the to_server socket descriptor
  *blocks until connection is made.*/
@@ -11,13 +19,9 @@ int client_tcp_handshake(char * server_address) {
   hints->ai_family = AF_INET;
   hints->ai_socktype = SOCK_STREAM; //TCP socket
   getaddrinfo(IP, PORT, hints, &results);  //Server sets node to NULL
-  
   int serverd;
-  //create the socket
-  serverd = socket(results->ai_family, results->ai_socktype, results->ai_protocol);
-  //connect to the server
-  connect(serverd, results->ai_addr, results->ai_addrlen);
-  
+  serverd = socket(results->ai_family, results->ai_socktype, results->ai_protocol); //create the socket
+  connect(serverd, results->ai_addr, results->ai_addrlen); //connect to the server
   free(hints);
   freeaddrinfo(results);
 
@@ -33,9 +37,7 @@ int server_tcp_handshake(int listen_socket){
     socklen_t sock_size;
     struct sockaddr_storage client_address;
     sock_size = sizeof(client_address);
-
-    //accept the client connection
-    client_socket = accept(listen_socket,(struct sockaddr *)&client_address, &sock_size);
+    client_socket = accept(listen_socket,(struct sockaddr *)&client_address, &sock_size); //accept the client connection
   
     return client_socket;
 }
@@ -45,28 +47,20 @@ int server_tcp_handshake(int listen_socket){
 * Creates semaphore
 */
 int server_setup() {
-  //setup structs for getaddrinfo
+  //getaddrinfo
   struct addrinfo * hints, * results;
   hints = calloc(1,sizeof(struct addrinfo));
   hints->ai_family = AF_INET;
   hints->ai_socktype = SOCK_STREAM; //TCP socket
   hints->ai_flags = AI_PASSIVE; //only needed on server
   getaddrinfo(NULL, PORT, hints, &results);  //Server sets node to NULL
-  
-  //create the socket
-  int clientd = socket(results->ai_family, results->ai_socktype, results->ai_protocol);
-  //this code should get around the address in use error
+  int clientd = socket(results->ai_family, results->ai_socktype, results->ai_protocol); //create the socket
   int yes = 1;
   int sockOpt =  setsockopt(clientd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
-  err(sockOpt,"sockopt  error");
-  
-  //bind the socket to address and port
-  bind(clientd, results->ai_addr, results->ai_addrlen);
-  //set socket to listen state
-  listen(clientd, 10);
-  
-  //free the structs used by getaddrinfo
-  free(hints);
+  err(sockOpt,"sockopt  error"); //this code should get around the address in use error
+  bind(clientd, results->ai_addr, results->ai_addrlen); //bind the socket to address and port
+  listen(clientd, 10); //set socket to listen state
+  free(hints); //free the structs used by getaddrinfo
   freeaddrinfo(results);
 
   // //Server creates semaphore

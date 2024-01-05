@@ -17,7 +17,7 @@ union semun {
    unsigned short  *array;  /* Array for GETALL, SETALL */
    struct seminfo  *__buf;  /* Buffer for IPC_INFO */
                             /* (Linux-specific) */
- };
+};
 
 void create(){
   int v, r;
