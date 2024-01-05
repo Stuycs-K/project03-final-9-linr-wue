@@ -1,5 +1,5 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
-int read(int server_socket);
-int edit(int server_socket);
+void read_data(int server_socket);
+void edit_data(int server_socket);
 #endif
