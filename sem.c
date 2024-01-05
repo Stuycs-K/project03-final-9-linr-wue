@@ -9,7 +9,7 @@
 #include <sys/shm.h> 
 #include <unistd.h>
 #define KEY 24602
-#define SHMKEY 24601
+#define SHMKEY 24605
 
 union semun { 
    int              val;    /* Value for SETVAL */

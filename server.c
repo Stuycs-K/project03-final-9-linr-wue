@@ -27,14 +27,14 @@ void subserver_logic(int client_socket){
 
 int main(int argc, char *argv[] ) { 
   int listen_socket = server_setup(); 
-  while (1){
+  //while (1){
     int client_socket = server_tcp_handshake(listen_socket);
-    pid_t p = fork();
-    if (p == 0){
+    // pid_t p = fork();
+    // if (p == 0){
       subserver_logic(client_socket);
-    }
-    else{
-      close(client_socket);
-    }
-  }
+  //   }
+  //   else{
+  //     close(client_socket);
+  //   }
+  // }
 }

@@ -18,9 +18,9 @@ int main(int argc, char *argv[] ) {
   if(argc>1){
     IP=argv[1];
   }
-  while (1){
+  // while (1){
     int server_socket = client_tcp_handshake(IP);
     printf("client connected.\n");
     clientLogic(server_socket);
-  }
+  //}
 }
