@@ -23,15 +23,5 @@ int edit(int server_socket) {
     write(server_socket, buffer, MAX);
     return 0;
 }
-// helper functions
-void delete() {
-
-}
-void add() {
-
-}
-void update() {
-
-}
 
 //______________________________FILE_MANIPULATION______________________________
