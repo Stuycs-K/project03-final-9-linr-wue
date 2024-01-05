@@ -27,11 +27,19 @@ void subserver_logic(int client_socket){
 
 int main(int argc, char *argv[] ) { 
   int listen_socket = server_setup(); 
+  int client_socket = server_tcp_handshake(listen_socket);
+  subserver_logic(client_socket);
+
+  // char command[BUFFER_SIZE];
+  // printf("Enter a command: \n"); 
+  // fgets(command,sizeof(command),stdin);
+
+
   //while (1){
-    int client_socket = server_tcp_handshake(listen_socket);
+    //int client_socket = server_tcp_handshake(listen_socket);
     // pid_t p = fork();
     // if (p == 0){
-      subserver_logic(client_socket);
+      //subserver_logic(client_socket);
   //   }
   //   else{
   //     close(client_socket);
