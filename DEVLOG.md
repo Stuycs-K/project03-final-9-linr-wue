@@ -10,8 +10,8 @@ Expanded description including how much time was spent on task.
 
 ## Eric Wu
 
-### 2024-01-02 - Brief description
-Expanded description including how much time was spent on task.
+### 2024-01-03 - Setting up project
+25 min in class - discussing and setting up the files we will need for the project. I also added previous code just to start off with the project. 
 
 ### 2024-01-03 - Brief description
 Expanded description including how much time was spent on task.
