@@ -2,12 +2,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
-#include "commands.h"
+#include "client_cmd.h"
 #define MAX 256
 
 //______________________________DATABASE_MANIPULATION______________________________
 // read from server and print out the content in the the database
-void read_data(int server_socket, char* database_name) {
+void cread_data(int server_socket, char* database_name) {
     char buffer[MAX];
     buffer[0] = '\0';
     strcat(buffer, "read ");
@@ -15,12 +15,12 @@ void read_data(int server_socket, char* database_name) {
     // buffer: read database_name
     write(server_socket, buffer, MAX);
 
-    read(server_socket, buffer, MAX);
+    read(server_socket, buffer, MAX); // temp
     printf("%s\n", buffer);
 }
 
 // update database in the server with user prompt
-void edit_data(int server_socket, char* database_name) {
+void cedit_data(int server_socket, char* database_name) {
     char buffer[MAX];
     buffer[0] = '\0';
     strcat(buffer, "edit ");
@@ -50,6 +50,8 @@ void edit_data(int server_socket, char* database_name) {
         }
     }
     // buffer: edit database_name operation -option 0 0 a b c d\n
+    buffer[strlen(buffer) - 1] = '\0';
+    // buffer: edit database_name operation -option 0 0 a b c d
     write(server_socket, buffer, MAX);
     
     //server writes "1" to client if success, "0" if fail
@@ -57,5 +59,6 @@ void edit_data(int server_socket, char* database_name) {
     if (strcmp(buffer, "1")) printf("Edit sucessful!\n");
     else printf("Edit unsucessful.\n");
 }
+
 
 //______________________________FILE_MANIPULATION______________________________
