@@ -13,8 +13,9 @@ void cread_data(int server_socket, char* input) {
     write(server_socket, input, MAX);
 
     char buffer[MAX];
-    read(server_socket, buffer, MAX); // temp
-    printf("%s\n", buffer);
+    while(read(server_socket, buffer, MAX) != 0) { // read from server line by line
+        printf("%s\n", buffer);
+    }
 }
 
 // update database in the server

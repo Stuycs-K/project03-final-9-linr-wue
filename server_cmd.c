@@ -6,11 +6,12 @@
 #define MAX 256
 
 //______________________________DATABASE_MANIPULATION______________________________
+// read database to client
 void sread_data(int client_socket, char* cmd) {
     FILE* Fd = fopen(cmd[1], 'r');
     if (Fd == NULL) { // database does not exist
-        char* temp[4] = "0";
-        write(client_socket, temp, 4); // write 0 (error) to client
+        char* temp[40] = "[Error] database does not exist";
+        write(client_socket, temp, 40); // write error to client
     }
     else { // database exists
         char* buffer[MAX];
@@ -18,9 +19,11 @@ void sread_data(int client_socket, char* cmd) {
             write(client_socket, buffer, MAX); // write to client line by line 
         }
     }
+    write(client_socket, buffer, 0); // end
     fclose(Fd);
 }
 
+// edit database for client
 void sedit_data(int client_socket, char* cmd) {
     sread_data(client_socket, database_name);
 
