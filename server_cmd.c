@@ -7,25 +7,29 @@
 
 //______________________________DATABASE_MANIPULATION______________________________
 // read database to client
-void sread_data(int client_socket, char* cmd) {
+int sread_data(int client_socket, char* cmd) {
     FILE* Fd = fopen(cmd[1], 'r');
     if (Fd == NULL) { // database does not exist
-        char* temp[40] = "[Error] database does not exist";
-        write(client_socket, temp, 40); // write error to client
+        char* temp[4] = "-1";
+        write(client_socket, temp, 4); // write -1 to client
+        fclose(Fd);
+        return -1;
     }
     else { // database exists
         char* buffer[MAX];
         while (fgets(buffer, MAX, Fd) != NULL) {
             write(client_socket, buffer, MAX); // write to client line by line 
         }
+        write(client_socket, buffer, 0); // end
+        fclose(Fd);
+        return 0;
     }
-    write(client_socket, buffer, 0); // end
-    fclose(Fd);
 }
 
 // edit database for client
 void sedit_data(int client_socket, char* cmd) {
-    sread_data(client_socket, database_name);
+    if (sread_data(client_socket, database_name) == -1) // read database to client
+        return;
 
     // edit database_name operation -option 0 0 a b c d
     char* buffer[MAX];

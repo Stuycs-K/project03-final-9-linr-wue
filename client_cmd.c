@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
@@ -7,20 +8,25 @@
 
 //______________________________DATABASE_MANIPULATION______________________________
 // read from server and print the database
-void cread_data(int server_socket, char* input) {
+int cread_data(int server_socket, char* input) {
     rm_newline(input);
     // read database_name
     write(server_socket, input, MAX);
 
     char buffer[MAX];
     while(read(server_socket, buffer, MAX) != 0) { // read from server line by line
+        if (atoi(buffer) = -1) {
+            printf("[Error] Database does not exist\n");
+            return -1;
+        }
         printf("%s\n", buffer);
     }
+    return 0;
 }
 
 // update database in the server
 // operations: add, update, delete
-// options: col 0 col_num, row row_num 0, cel row_num col_num (cel only for update)
+// options: col -1 col_num, row row_num -1, cel row_num col_num (cel only for update)
 // entries (no entry for delete)
 void cedit_data(int server_socket, char* input) {
     char buffer[MAX];
@@ -30,7 +36,8 @@ void cedit_data(int server_socket, char* input) {
     strcat(cmd, input);
     strcat(cmd, " ");
 
-    cread_data(server_socket, input); // read and print database
+    if (cread_data(server_socket, input) == -1) // read and print database
+        return; 
 
     // user prompt
     printf("Enter the edit you would like to make\n: ");
@@ -44,12 +51,12 @@ void cedit_data(int server_socket, char* input) {
         strcat(cmd, " ");
         strcat(cmd, buffer);
     }
-
     // edit database_name operation -option 0 0 a b c d
     write(server_socket, buffer, MAX);
     
     //server returns 1 if successful
     read(server_socket, buffer, MAX);
+    prin
     if (strcmp(buffer, "1")) printf("Edit sucessful!\n");
     else printf("Edit unsucessful.\n");
 }

@@ -1,6 +1,6 @@
 #ifndef CLIENT_CMD_H
 #define CLIENT_CMD_H
-void cread_data(int server_socket, char* database_name);
-void cedit_data(int server_socket, char* database_name);
+int cread_data(int server_socket, char* input);
+void cedit_data(int server_socket, char* input);
 void rm_newline(char* s)
 #endif
