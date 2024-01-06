@@ -7,6 +7,8 @@
 #define MAX 256
 
 //______________________________DATABASE_MANIPULATION______________________________
+// char* input: command line input with newline at the end
+
 // read from server and print the database
 int cread_data(int server_socket, char* input) {
     rm_newline(input);
@@ -27,7 +29,7 @@ int cread_data(int server_socket, char* input) {
 // update database in the server
 // operations: add, update, delete
 // options: col -1 col_num, row row_num -1, cel row_num col_num (cel only for update)
-// entries (no entry for delete)
+// entries: separated by comma (no entry for delete)
 void cedit_data(int server_socket, char* input) {
     char buffer[MAX];
     char cmd[MAX];
@@ -42,23 +44,20 @@ void cedit_data(int server_socket, char* input) {
     // user prompt
     printf("Enter the edit you would like to make\n: ");
     fgets(buffer, MAX, stdin);
-    rm_newline(buffer);
     strcat(cmd, buffer);
     if (buffer[0] != 'd') { // add or update
+        rm_newline(cmd);
         printf("Enter the entries: \n: ");
         fgets(buffer, MAX, stdin);
-        rm_newline(buffer);
         strcat(cmd, " ");
         strcat(cmd, buffer);
     }
-    // edit database_name operation -option 0 0 a b c d
+    // edit database_name operation -option 0 0 a b c d\n
     write(server_socket, buffer, MAX);
     
-    //server returns 1 if successful
-    read(server_socket, buffer, MAX);
-    prin
-    if (strcmp(buffer, "1")) printf("Edit sucessful!\n");
-    else printf("Edit unsucessful.\n");
+    // server returns "Edit successful!"
+    read(server_socket, buffer, 20);
+    printf("%s\n", buffer);
 }
 
 // --------------------Helper-Functions--------------------

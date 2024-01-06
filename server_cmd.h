@@ -1,5 +1,8 @@
 #ifndef SERVER_CMD_H
 #define SERVER_CMD_H
-int sread_data(int client_socket, char* database_name);
-void sedit_data(int client_socket, char* database_name);
+int sread_data(int client_socket, char** cmd);
+void sedit_data(int client_socket, char** cmd);
+void add_(char** cmd);
+void update_(char** cmd);
+void delete_(char** cmd);
 #endif
