@@ -2,18 +2,19 @@
 
 ## Ruize Lin
 
-### 2024-01-02 - Brief description
-Expanded description including how much time was spent on task.
-
-### 2024-01-03 - Brief description
-Expanded description including how much time was spent on task.
-
 ### 2024-01-04 - Working on read and edit command for client
 25 min - discussing and setting up the files we will need for the project.
 
 15 min - working on read command.
 
 45 min - working on write command.
+
+### 2024-01-05 - Wokring on read and edit for server
+20 min - continued discussing necessary files and functions. Modified read so that the database is sent line by line.
+
+40 min - working on file not exist error handling for read for client and server.
+
+30 min - working on edit for client and server.
 
 ## Eric Wu
 
