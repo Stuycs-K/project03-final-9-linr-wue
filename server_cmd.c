@@ -9,8 +9,8 @@
 void sread_data(int client_socket, char* cmd) {
     FILE* Fd = fopen(cmd[1], 'r');
     if (Fd == NULL) { // database does not exist
-        char* temp[4] = "-1";
-        write(client_socket, temp, 4); // write -1 (error) to client
+        char* temp[4] = "0";
+        write(client_socket, temp, 4); // write 0 (error) to client
     }
     else { // database exists
         char* buffer[MAX];
@@ -28,7 +28,15 @@ void sedit_data(int client_socket, char* cmd) {
     char* buffer[MAX];
     int fd = open(cmd[1], O_WRONLY, 0744);
     FILE* Fd = fopen(cmd[1], 'w');
-    if (strcmp())
+    if (strcmp(cmd[2], "add") == 0) {
+
+    }
+    else if (strcmp(cmd[2], "update") == 0) {
+
+    }
+    else if (strcmp(cmd[2], "delete") == 0) {
+
+    }
 
 
 }
