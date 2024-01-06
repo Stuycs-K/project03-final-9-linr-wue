@@ -26,6 +26,8 @@ Makefile and all files set up by Thursday 1/4/24.
 
 Basic network and semaphore set up by Monday 1/8/24.
 
-Basic database commands to be done by Monday 1/8/24.
+Basic database commands (read, write) to be done by Monday 1/8/24.
 
-Subserver to be set up by Tuesday 1/9/24. 
+Subserver to be set up by Tuesday 1/9/24.
+
+Add select by 1/11/24
