@@ -39,12 +39,13 @@ int main(int argc, char *argv[] ) {
   int client_socket = server_tcp_handshake(listen_socket);
   subserver_logic(client_socket);
 
-  // char data[128];
-  // int bytes; 
-  // int semd = semget(KEY, 1, 0); //Getting value of semaphore
-  // int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Getting value of shared memory
-  // shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
-  // semctl(semd, IPC_RMID, 0);
+  char data[128];
+  int bytes; 
+  int semd = semget(KEY, 1, 0); //Getting value of semaphore
+  int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Getting value of shared memory
+  shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
+  semctl(semd, IPC_RMID, 0);
+  printf("Segment Deleted\n");
 
   // char command[BUFFER_SIZE];
   // printf("Enter a command: \n"); 
