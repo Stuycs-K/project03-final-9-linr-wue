@@ -9,12 +9,17 @@
 
 45 min - working on write command.
 
-### 2024-01-05 - Wokring on read and edit for server
+### 2024-01-05 - Working on read and edit for server
 20 min - continued discussing necessary files and functions. Modified read so that the database is sent line by line.
 
 40 min - working on file not exist error handling for read for client and server.
 
 30 min - working on edit for client and server.
+
+### 2024-01-06 - Integrating command selections into client and server
+30 min - implementing command response in client and server.
+
+50 min - fixing read function.
 
 ## Eric Wu
 
