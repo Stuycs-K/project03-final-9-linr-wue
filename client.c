@@ -9,6 +9,7 @@
 #include <sys/shm.h> 
 #include <unistd.h>
 #include "networking.h"
+#include "client_cmd.h"
 #define KEY 24602
 #define SHMKEY 24605
 
