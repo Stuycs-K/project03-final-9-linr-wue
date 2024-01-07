@@ -13,13 +13,14 @@ int sread_data(int client_socket, char** cmd) {
     FILE* Fd = fopen(cmd[1], "r");
     if (Fd == NULL) { // database does not exist
         char temp[4] = "-1";
-        write(client_socket, temp, 4); // write -1 to client
+        write(client_socket, temp, strlen(temp) + 1); // write -1 to client
         fclose(Fd);
         return -1;
     }
     else { // database exists
         char buffer[MAX];
         while (fgets(buffer, MAX, Fd) != NULL) {
+            printf("%s", buffer);
             write(client_socket, buffer, strlen(buffer) + 1); // write to client line by line 
         }
         write(client_socket, buffer, 0); // end

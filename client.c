@@ -27,7 +27,6 @@ void clientLogic(int server_socket){
   char* first_cmd = strsep(&c, " ");
   printf("%s\n", first_cmd); // t
   if (strcmp(first_cmd, "read") == 0) {
-    printf("yes\n");
     cread_data(server_socket, msgToSend);
   }
 

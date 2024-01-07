@@ -12,7 +12,7 @@
 // read from server and print the database
 int cread_data(int server_socket, char* input) {
     rm_newline(input);
-    printf("%s\n", input);
+    printf("%s|\n", input);
     // read database_name
     write(server_socket, input, strlen(input) + 1);
 
@@ -67,7 +67,7 @@ void cedit_data(int server_socket, char* input) {
 // replace newline at the end of user input with null
 void rm_newline(char* s) {
     for (int i = 0; i < strlen(s); i++) {
-        if (strcmp(s[i], '\n') == 0) {
+        if (s[i] == '\n') {
             s[i] = '\0';
         }
     }
