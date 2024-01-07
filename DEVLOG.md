@@ -27,6 +27,6 @@
 
 1 hr (40 min in class; 20 min at home) - cleaned up unneccessary code; set up basic network with server and client without any subserver; edited the files to have server set up semaphore and shared memory, and the server correctly creates semaphore; tried having client access the semaphore but there is a segfault; bug in the if statement of comparing the stdin buffer and a string
 
-### 2024-01-06 - Desc
+### 2024-01-06 - Didn't work on project today
 
 ### 2024-01-07 - Desc
