@@ -14,7 +14,6 @@ int sread_data(int client_socket, char** cmd) {
     if (Fd == NULL) { // database does not exist
         char temp[4] = "-1";
         write(client_socket, temp, strlen(temp) + 1); // write -1 to client
-        fclose(Fd);
         return -1;
     }
     else { // database exists
@@ -23,7 +22,6 @@ int sread_data(int client_socket, char** cmd) {
             printf("%s", buffer);
             write(client_socket, buffer, strlen(buffer) + 1); // write to client line by line 
         }
-        // write(client_socket, buffer, 0); // end
         fclose(Fd);
         return 0;
     }

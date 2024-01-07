@@ -12,7 +12,6 @@
 // read from server and print the database
 int cread_data(int server_socket, char* input) {
     rm_newline(input);
-    printf("%s|\n", input);
     // read database_name
     write(server_socket, input, strlen(input) + 1);
 
