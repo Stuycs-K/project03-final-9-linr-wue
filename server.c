@@ -15,21 +15,21 @@
 #define SHMKEY 24605
 
 void subserver_logic(int client_socket){
-  printf("Listening to the client commands\n");
+  printf("Listening to the client commands.\n");
   char msgRead[BUFFER_SIZE];
   read(client_socket,msgRead,sizeof(msgRead));
 
   // command from client into array of arguments
-  printf("%s\n", msgRead); // t
   char* cmd[20];
   char* c = msgRead;
   int i = 0;
-  while(cmd[i++] = strsep(&c, " ")) {
-    printf("%s\n", cmd[i - 1]);
-  };
-
+  while(cmd[i++] = strsep(&c, " "));
+  // command selection
   if (strcmp(cmd[0], "read") == 0) {
     sread_data(client_socket, cmd);
+  }
+  else if (strcmp(cmd[0], "edit") == 0) {
+    sedit_data(client_socket, cmd);
   }
 
   // if (strcmp(msgRead,"write")){
@@ -46,7 +46,9 @@ void subserver_logic(int client_socket){
 int main(int argc, char *argv[] ) { 
   int listen_socket = server_setup(); 
   int client_socket = server_tcp_handshake(listen_socket);
-  subserver_logic(client_socket);
+  while(1) {
+    subserver_logic(client_socket);
+  }
 
   // char data[128];
   // int bytes; 
@@ -70,5 +72,4 @@ int main(int argc, char *argv[] ) {
   //     close(client_socket);
   //   }
   // }
-  close(client_socket);
 }

@@ -18,13 +18,29 @@ int sread_data(int client_socket, char** cmd) {
     }
     else { // database exists
         char buffer[MAX];
+        int n = count_line(cmd[1]);
+        sprintf(buffer, "%d", n);
+        write(client_socket, buffer, strlen(buffer) + 1); // write to client number of lines
+        usleep(250);
         while (fgets(buffer, MAX, Fd) != NULL) {
-            printf("%s", buffer);
             write(client_socket, buffer, strlen(buffer) + 1); // write to client line by line 
+            usleep(250);
         }
         fclose(Fd);
         return 0;
     }
+}
+// helper function
+int count_line(char* database_name) {
+    FILE* Fd = fopen(database_name, "r");
+    int n = 0;
+    for (char c = getc(Fd); c != EOF; c = getc(Fd)) {
+        if (c == '\n') {
+            n++;
+        }
+    }
+    fclose(Fd);
+    return n;
 }
 
 // edit database for client

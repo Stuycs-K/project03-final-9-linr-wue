@@ -17,19 +17,21 @@
 void clientLogic(int server_socket){
   char buffer[BUFFER_SIZE];
   char msgToSend[64];
-  printf("Enter a command: \n"); 
+  printf("Enter a command: "); 
   fgets(msgToSend,sizeof(msgToSend),stdin);
-
+  // find command
   char temp[MAX];
   char* c = temp;
   strcpy(temp, msgToSend);
-  printf("%s\n", temp); // t
   char* first_cmd = strsep(&c, " ");
-  printf("%s\n", first_cmd); // t
+  // commands selections
   if (strcmp(first_cmd, "read") == 0) {
     cread_data(server_socket, msgToSend);
   }
-
+  else if (strcmp(first_cmd, "edit") == 0) {
+    cedit_data(server_socket, msgToSend);
+  }
+  printf("\n");
   // write(server_socket, msgToSend, strlen(msgToSend)+1);
 
   // read(server_socket,buffer,sizeof(buffer));
@@ -45,7 +47,9 @@ int main(int argc, char *argv[] ) {
 
   int server_socket = client_tcp_handshake(IP);
   printf("client connected.\n");
-  clientLogic(server_socket);
+  while (1) {
+    clientLogic(server_socket);
+  }
 
   // int semd;
   // int r;
@@ -94,5 +98,4 @@ int main(int argc, char *argv[] ) {
     // printf("client connected.\n");
     // clientLogic(server_socket);
   //}
-  close(server_socket);
 }

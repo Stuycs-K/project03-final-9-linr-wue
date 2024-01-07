@@ -16,16 +16,19 @@ int cread_data(int server_socket, char* input) {
     write(server_socket, input, strlen(input) + 1);
 
     char buffer[MAX];
-    while((read(server_socket, buffer, MAX)) != 0) { // read from server line by line
-        if (strcmp(buffer, "-1") == 0) {
-            printf("[Error] Database does not exist\n");
-            return -1;
-        }
-        else {
-            printf("%s", buffer);
+    read(server_socket, buffer, MAX); // read from server number of lines
+    int n = atoi(buffer);
+    if (n == -1) { // database not exist
+        printf("[Error] Database does not exist.\n");
+        return -1;
+    }
+    else {
+        while(n > 0) { // read from server line by line
+            read(server_socket, buffer, MAX);
+            printf("\t%s", buffer);
+            n--;
         }
     }
-    printf("end!\n");
     return 0;
 }
 
@@ -45,12 +48,12 @@ void cedit_data(int server_socket, char* input) {
         return; 
 
     // user prompt
-    printf("Enter the edit you would like to make\n: ");
+    printf("Enter the edit you would like to make: ");
     fgets(buffer, MAX, stdin);
     rm_newline(buffer);
     strcat(cmd, buffer);
     if (buffer[0] != 'd') { // add or update
-        printf("Enter the entries\n: ");
+        printf("Enter entries: ");
         fgets(buffer, MAX, stdin);
         strcat(cmd, " ");
         strcat(cmd, buffer);
