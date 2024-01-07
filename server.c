@@ -19,6 +19,7 @@ void subserver_logic(int client_socket){
   char msgRead[BUFFER_SIZE];
   read(client_socket,msgRead,sizeof(msgRead));
 
+  // command from client into array of arguments
   printf("%s\n", msgRead); // t
   char* cmd[20];
   char* c = msgRead;
@@ -30,7 +31,6 @@ void subserver_logic(int client_socket){
   if (strcmp(cmd[0], "read") == 0) {
     sread_data(client_socket, cmd);
   }
-
 
   // if (strcmp(msgRead,"write")){
   //   printf("1");
@@ -70,4 +70,5 @@ int main(int argc, char *argv[] ) {
   //     close(client_socket);
   //   }
   // }
+  close(client_socket);
 }

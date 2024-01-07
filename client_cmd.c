@@ -17,7 +17,7 @@ int cread_data(int server_socket, char* input) {
     write(server_socket, input, strlen(input) + 1);
 
     char buffer[MAX];
-    while(read(server_socket, buffer, MAX) != 0) { // read from server line by line
+    while((read(server_socket, buffer, MAX)) != 0) { // read from server line by line
         if (strcmp(buffer, "-1") == 0) {
             printf("[Error] Database does not exist\n");
             return -1;
@@ -26,6 +26,7 @@ int cread_data(int server_socket, char* input) {
             printf("%s", buffer);
         }
     }
+    printf("end!\n");
     return 0;
 }
 

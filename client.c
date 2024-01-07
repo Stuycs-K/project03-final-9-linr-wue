@@ -94,4 +94,5 @@ int main(int argc, char *argv[] ) {
     // printf("client connected.\n");
     // clientLogic(server_socket);
   //}
+  close(server_socket);
 }

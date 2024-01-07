@@ -23,7 +23,7 @@ int sread_data(int client_socket, char** cmd) {
             printf("%s", buffer);
             write(client_socket, buffer, strlen(buffer) + 1); // write to client line by line 
         }
-        write(client_socket, buffer, 0); // end
+        // write(client_socket, buffer, 0); // end
         fclose(Fd);
         return 0;
     }
