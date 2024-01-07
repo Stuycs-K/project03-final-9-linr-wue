@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include "networking.h"
 #include "client_cmd.h"
+#define MAX 256
 #define KEY 24602
 #define SHMKEY 24605
 
@@ -18,7 +19,19 @@ void clientLogic(int server_socket){
   char msgToSend[64];
   printf("Enter a command: \n"); 
   fgets(msgToSend,sizeof(msgToSend),stdin);
-  write(server_socket, msgToSend, strlen(msgToSend)+1);
+
+  char temp[MAX];
+  char* c = temp;
+  strcpy(temp, msgToSend);
+  printf("%s\n", temp); // t
+  char* first_cmd = strsep(&c, " ");
+  printf("%s\n", first_cmd); // t
+  if (strcmp(first_cmd, "read") == 0) {
+    printf("yes\n");
+    cread_data(server_socket, msgToSend);
+  }
+
+  // write(server_socket, msgToSend, strlen(msgToSend)+1);
 
   // read(server_socket,buffer,sizeof(buffer));
   // printf("Read from server: %s",buffer);

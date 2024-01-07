@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include "networking.h"
 #include "server_cmd.h"
+#define MAX 20
 #define KEY 24602
 #define SHMKEY 24605
 
@@ -17,9 +18,24 @@ void subserver_logic(int client_socket){
   printf("Listening to the client commands\n");
   char msgRead[BUFFER_SIZE];
   read(client_socket,msgRead,sizeof(msgRead));
-  if (strcmp(msgRead,"write")){
-    printf("1");
+
+  printf("%s\n", msgRead); // t
+  char* cmd[20];
+  char* c = msgRead;
+  int i = 0;
+  while(cmd[i++] = strsep(&c, " ")) {
+    printf("%s\n", cmd[i - 1]);
+  };
+
+  if (strcmp(cmd[0], "read") == 0) {
+    sread_data(client_socket, cmd);
   }
+
+
+  // if (strcmp(msgRead,"write")){
+  //   printf("1");
+  // }
+
   //printf("Read: %s",msgRead);
   // char rot13Msg[BUFFER_SIZE];
   // strcpy(rot13Msg,msgRead);

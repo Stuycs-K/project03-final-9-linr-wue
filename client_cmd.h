@@ -2,5 +2,5 @@
 #define CLIENT_CMD_H
 int cread_data(int server_socket, char* input);
 void cedit_data(int server_socket, char* input);
-void rm_newline(char* s)
+void rm_newline(char* s);
 #endif

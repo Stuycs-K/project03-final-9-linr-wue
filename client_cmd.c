@@ -12,16 +12,19 @@
 // read from server and print the database
 int cread_data(int server_socket, char* input) {
     rm_newline(input);
+    printf("%s\n", input);
     // read database_name
-    write(server_socket, input, MAX);
+    write(server_socket, input, strlen(input) + 1);
 
     char buffer[MAX];
     while(read(server_socket, buffer, MAX) != 0) { // read from server line by line
-        if (atoi(buffer) = -1) {
+        if (strcmp(buffer, "-1") == 0) {
             printf("[Error] Database does not exist\n");
             return -1;
         }
-        printf("%s\n", buffer);
+        else {
+            printf("%s", buffer);
+        }
     }
     return 0;
 }
@@ -44,16 +47,16 @@ void cedit_data(int server_socket, char* input) {
     // user prompt
     printf("Enter the edit you would like to make\n: ");
     fgets(buffer, MAX, stdin);
+    rm_newline(buffer);
     strcat(cmd, buffer);
     if (buffer[0] != 'd') { // add or update
-        rm_newline(cmd);
-        printf("Enter the entries: \n: ");
+        printf("Enter the entries\n: ");
         fgets(buffer, MAX, stdin);
         strcat(cmd, " ");
         strcat(cmd, buffer);
     }
-    // edit database_name operation -option 0 0 a b c d\n
-    write(server_socket, buffer, MAX);
+    // edit database_name operation -option 0 0 a,b,c,d
+    write(server_socket, cmd, strlen(cmd) + 1);
     
     // server returns "Edit successful!"
     read(server_socket, buffer, 20);

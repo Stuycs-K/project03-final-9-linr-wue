@@ -10,17 +10,17 @@
 
 // read database to client
 int sread_data(int client_socket, char** cmd) {
-    FILE* Fd = fopen(cmd[1], 'r');
+    FILE* Fd = fopen(cmd[1], "r");
     if (Fd == NULL) { // database does not exist
-        char* temp[4] = "-1";
+        char temp[4] = "-1";
         write(client_socket, temp, 4); // write -1 to client
         fclose(Fd);
         return -1;
     }
     else { // database exists
-        char* buffer[MAX];
+        char buffer[MAX];
         while (fgets(buffer, MAX, Fd) != NULL) {
-            write(client_socket, buffer, MAX); // write to client line by line 
+            write(client_socket, buffer, strlen(buffer) + 1); // write to client line by line 
         }
         write(client_socket, buffer, 0); // end
         fclose(Fd);
@@ -33,7 +33,7 @@ void sedit_data(int client_socket, char** cmd) {
     if (sread_data(client_socket, cmd) == -1) // read database to client
         return;
 
-    // edit database_name operation -option 0 0 a b c d
+    // edit database_name operation -option 0 0 a,b,c,d
     if (strcmp(cmd[2], "add") == 0) {
         add_(cmd);
     }
@@ -50,10 +50,10 @@ void sedit_data(int client_socket, char** cmd) {
 }
 // helper functions
 void add_(char** cmd) {
-    // edit database_name operation -option 0 0 a b c d
-    char* buffer[MAX];
+    // edit database_name operation -option 0 0 a,b,c,d
+    char buffer[MAX];
     int fd = open(cmd[1], O_WRONLY, 0744);
-    FILE* Fd = fopen(cmd[1], 'w');
+    FILE* Fd = fopen(cmd[1], "w");
 
     if (strcmp(cmd[3], "-col") == 0) {
 
@@ -63,8 +63,8 @@ void add_(char** cmd) {
     }
 
 }
-void update_() {
-    // edit database_name operation -option 0 0 a b c d
+void update_(char** cmd) {
+    // edit database_name operation -option 0 0 a,b,c,d
     if (strcmp(cmd[3], "-col") == 0) {
 
     }
@@ -75,8 +75,8 @@ void update_() {
 
     }
 }
-void delete_() {
-    // edit database_name operation -option 0 0 a b c d
+void delete_(char** cmd) {
+    // edit database_name operation -option 0 0 a,b,c,d
     if (strcmp(cmd[3], "-col") == 0) {
 
     }
