@@ -11,8 +11,8 @@
 #include "networking.h"
 #include "client_cmd.h"
 #define MAX 256
-#define KEY 24602
-#define SHMKEY 24605
+// #define KEY 24602
+// #define SHMKEY 24605
 
 void clientLogic(int server_socket){
   char buffer[BUFFER_SIZE];
