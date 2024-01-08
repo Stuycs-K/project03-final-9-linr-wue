@@ -9,6 +9,8 @@
 #include <sys/shm.h> 
 #include <unistd.h>
 #include "networking.h"
+#include "server_cmd.h"
+#define MAX 20
 #define KEY 24602
 #define SHMKEY 24605
 
@@ -21,12 +23,27 @@ union semun {
 };
 
 void subserver_logic(int client_socket){
-  printf("Listening to the client commands\n");
+  printf("Listening to the client commands.\n");
   char msgRead[BUFFER_SIZE];
   read(client_socket,msgRead,sizeof(msgRead));
-  if (strcmp(msgRead,"write")){
-    printf("1");
+
+  // command from client into array of arguments
+  char* cmd[20];
+  char* c = msgRead;
+  int i = 0;
+  while(cmd[i++] = strsep(&c, " "));
+  // command selection
+  if (strcmp(cmd[0], "read") == 0) {
+    sread_data(client_socket, cmd);
   }
+  else if (strcmp(cmd[0], "edit") == 0) {
+    sedit_data(client_socket, cmd);
+  }
+
+  // if (strcmp(msgRead,"write")){
+  //   printf("1");
+  // }
+
   //printf("Read: %s",msgRead);
   // char rot13Msg[BUFFER_SIZE];
   // strcpy(rot13Msg,msgRead);
@@ -37,7 +54,9 @@ void subserver_logic(int client_socket){
 int main(int argc, char *argv[] ) { 
   int listen_socket = server_setup(); 
   int client_socket = server_tcp_handshake(listen_socket);
-  subserver_logic(client_socket);
+  while(1) {
+    subserver_logic(client_socket);
+  }
 
   char data[128];
   int bytes; 
