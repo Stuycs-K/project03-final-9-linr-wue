@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <sys/shm.h> 
 #include <unistd.h>
+#include <signal.h>
 #include "networking.h"
 #include "server_cmd.h"
 #define MAX 20
@@ -21,6 +22,19 @@ union semun {
    struct seminfo  *__buf;  /* Buffer for IPC_INFO */
                             /* (Linux-specific) */
 };
+
+static void sighandler(int signo) {
+    if (signo == SIGINT){
+      char data[128];
+      int bytes; 
+      int semd = semget(KEY, 1, 0); //Getting value of semaphore
+      int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Getting value of shared memory
+      shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
+      semctl(semd, IPC_RMID, 0);
+      printf("Segment Deleted\n");
+      exit(0);
+    }
+}
 
 void subserver_logic(int client_socket){
   printf("Listening to the client commands.\n");
@@ -53,32 +67,26 @@ void subserver_logic(int client_socket){
 
 int main(int argc, char *argv[] ) { 
   int listen_socket = server_setup(); 
+  signal(SIGINT, sighandler);
   //int client_socket = server_tcp_handshake(listen_socket);
   while(1) {
     int client_socket = server_tcp_handshake(listen_socket);
     pid_t p = fork();
     if (p == 0){
       subserver_logic(client_socket);
-      // char data[128];
-      // int bytes; 
-      // int semd = semget(KEY, 1, 0); //Getting value of semaphore
-      // int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Getting value of shared memory
-      // shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
-      // semctl(semd, IPC_RMID, 0);
-      // printf("Segment Deleted\n");
     }
     else{
       close(client_socket);
     }
   }
 
-  char data[128];
-  int bytes; 
-  int semd = semget(KEY, 1, 0); //Getting value of semaphore
-  int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Getting value of shared memory
-  shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
-  semctl(semd, IPC_RMID, 0);
-  printf("Segment Deleted\n");
+  // char data[128];
+  // int bytes; 
+  // int semd = semget(KEY, 1, 0); //Getting value of semaphore
+  // int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Getting value of shared memory
+  // shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
+  // semctl(semd, IPC_RMID, 0);
+  // printf("Segment Deleted\n");
 
   // char command[BUFFER_SIZE];
   // printf("Enter a command: \n"); 
