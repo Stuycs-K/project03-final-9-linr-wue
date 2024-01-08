@@ -10,8 +10,8 @@
 
 // read database to client
 int sread_data(int client_socket, char** cmd) {
-    FILE* Fd = fopen(cmd[1], "r");
-    if (Fd == NULL) { // database does not exist
+    FILE* fp = fopen(cmd[1], "r");
+    if (fp == NULL) { // database does not exist
         char temp[4] = "-1";
         write(client_socket, temp, strlen(temp) + 1); // write -1 to client
         return -1;
@@ -22,24 +22,24 @@ int sread_data(int client_socket, char** cmd) {
         sprintf(buffer, "%d", n);
         write(client_socket, buffer, strlen(buffer) + 1); // write to client number of lines
         usleep(250);
-        while (fgets(buffer, MAX, Fd) != NULL) {
+        while (fgets(buffer, MAX, fp) != NULL) {
             write(client_socket, buffer, strlen(buffer) + 1); // write to client line by line 
             usleep(250);
         }
-        fclose(Fd);
+        fclose(fp);
         return 0;
     }
 }
 // helper function
 int count_line(char* database_name) {
-    FILE* Fd = fopen(database_name, "r");
+    FILE* fp = fopen(database_name, "r");
     int n = 0;
-    for (char c = getc(Fd); c != EOF; c = getc(Fd)) {
+    for (char c = getc(fp); c != EOF; c = getc(fp)) {
         if (c == '\n') {
             n++;
         }
     }
-    fclose(Fd);
+    fclose(fp);
     return n;
 }
 
@@ -65,21 +65,27 @@ void sedit_data(int client_socket, char** cmd) {
 }
 // helper functions
 void add_(char** cmd) {
-    // edit database_name operation -option 0 0 a,b,c,d
+    // edit database_name operation -option col row a,b,c,d
     char buffer[MAX];
     int fd = open(cmd[1], O_WRONLY, 0744);
-    FILE* Fd = fopen(cmd[1], "w");
+    FILE* fp = fopen(cmd[1], "r+");
 
     if (strcmp(cmd[3], "-col") == 0) {
-
+    
     }
     else if (strcmp(cmd[3], "-row") == 0) {
-
+        int row = cmd[4];
+        while(int l = 0; l < row; l++) { // skips the lines before target
+            char temp[MAX];
+            fgets(temp, MAX, fp);
+        }
+        fputs(cmd[6], fp); // insert line
+        
     }
 
 }
 void update_(char** cmd) {
-    // edit database_name operation -option 0 0 a,b,c,d
+    // edit database_name operation -option col row a,b,c,d
     if (strcmp(cmd[3], "-col") == 0) {
 
     }
@@ -91,12 +97,14 @@ void update_(char** cmd) {
     }
 }
 void delete_(char** cmd) {
-    // edit database_name operation -option 0 0 a,b,c,d
+    // edit database_name operation -option col row a,b,c,d
     if (strcmp(cmd[3], "-col") == 0) {
 
     }
     else if (strcmp(cmd[3], "-row") == 0) {
         
     }
+}
+void remove_entry(FILE* fp, char* new) {
 }
 //______________________________FILE_MANIPULATION______________________________

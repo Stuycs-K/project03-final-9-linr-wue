@@ -34,7 +34,7 @@ int cread_data(int server_socket, char* input) {
 
 // update database in the server
 // operations: add, update, delete
-// options: col -1 col_num, row row_num -1, cel row_num col_num (cel only for update)
+// options: col col_num -1, row -1 row_num, cel col_num row_num(cel only for update)
 // entries: separated by comma (no entry for delete)
 void cedit_data(int server_socket, char* input) {
     char buffer[MAX];
@@ -58,7 +58,7 @@ void cedit_data(int server_socket, char* input) {
         strcat(cmd, " ");
         strcat(cmd, buffer);
     }
-    // edit database_name operation -option 0 0 a,b,c,d
+    // edit database_name operation -option col row a,b,c,d
     write(server_socket, cmd, strlen(cmd) + 1);
     
     // server returns "Edit successful!"
