@@ -74,21 +74,15 @@ int main(int argc, char *argv[] ) {
   sb.sem_num = 0;
   sb.sem_op = -1; //Using the semaphore by downing value of semaphore
   semop(semd, &sb, 1); //Setting sempahore value to 1 so others can't use it
-
   //data = shmat(shmid, 0, 0); //Attaching shmid to data
   //char lastLine[*data]; //Trying to get the last line of the story by using amount of bytes of shared memory from the last line
   printf("Semaphore accessed!\n");
-  // int w_file = open("story.txt", O_RDWR | O_APPEND); //Opening a file for story
-  // lseek(w_file, *data * -1, SEEK_END);//Seeking to start of the last line
-  // int bytes = read(w_file,lastLine,*data); //Reading into the last line using the size of shared memory
-  //lastLine[*data] = 0;
-  //printf("Previous Line: %s", lastLine);
   printf("Enter your data: ");
   fgets(buffer,sizeof(buffer),stdin); //Copying stdin to buffer
   int len = strlen(buffer);
   //write(w_file, buffer, len); //Writing buffer to the file
-  *data = len;
-  shmdt(data);
+  // *data = len;
+  // shmdt(data);
 
   sb.sem_op = 1; //Upping value of semaphore to indicate another program can use it
   semop(semd, &sb, 1);
