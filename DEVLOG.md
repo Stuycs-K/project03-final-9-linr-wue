@@ -34,4 +34,8 @@
 
 ### 2024-01-06 - Didn't work on project today
 
-### 2024-01-07 - Desc
+### 2024-01-07 - Working on subserver and semaphore
+
+1 hr - fixed subserver so it works properly; cleaned up code; added sighandler to server to close semaphore; implemented semaphore usage into client but cannot test it because of unresolved bug
+
+15 min - trying to run select server but unsuccessful although the client strcmp seems to work when using select server

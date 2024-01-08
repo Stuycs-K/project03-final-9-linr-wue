@@ -12,7 +12,7 @@
 int main(){
     struct addrinfo * hints, * results;
     hints = calloc(1,sizeof(struct addrinfo));
-    char* PORT = "9998";
+    char* PORT = "19230";
 
 
     hints->ai_family = AF_INET;

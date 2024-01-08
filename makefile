@@ -1,5 +1,5 @@
 .PHONY: clean run compile control
-compile: clientComp serverComp semControl semWrite
+compile: clientComp serverComp semControl semWrite selectserver
 
 clientComp: client.o networking.o client_cmd.o
 	@gcc -o client client.o networking.o client_cmd.o
@@ -17,6 +17,8 @@ client_cmd.o: client_cmd.c client_cmd.h
 server_cmd.o: server_cmd.c server_cmd.h
 	@gcc -c server_cmd.c
 # select
+selectserver: selectserver.o 
+	@gcc -o select selectserver.o
 selectserver.o: selectserver.c
 	@gcc -c selectserver.c 
 # semaphore
@@ -36,4 +38,4 @@ sem.o: sem.c
 	@gcc -c sem.c
 
 clean:
-	@rm -f *.o server client semControl semWrite 2> /dev/null || true
+	@rm -f *.o server client semControl semWrite select 2> /dev/null || true
