@@ -12,8 +12,8 @@
 #include "networking.h"
 #include "server_cmd.h"
 #define MAX 20
-#define KEY 24602
-#define SHMKEY 24605
+// #define KEY 24602
+// #define SHMKEY 24605
 
 union semun { 
    int              val;    /* Value for SETVAL */
@@ -28,9 +28,9 @@ static void sighandler(int signo) {
       char data[128];
       int bytes; 
       int semd = semget(KEY, 1, 0); //Getting value of semaphore
-      int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Getting value of shared memory
+      int shmid = shmget(SHMKEY, 0, 0); //Getting value of shared memory
       shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
-      semctl(semd, IPC_RMID, 0);
+      semctl(semd, IPC_RMID, 0); //Removing the semaphore
       printf("Segment Deleted\n");
       exit(0);
     }
@@ -55,16 +55,6 @@ void subserver_logic(int client_socket){
     printf("here!\n");
     sedit_data(client_socket, cmd);
   }
-
-  // if (strcmp(msgRead,"write")){
-  //   printf("1");
-  // }
-
-  //printf("Read: %s",msgRead);
-  // char rot13Msg[BUFFER_SIZE];
-  // strcpy(rot13Msg,msgRead);
-  // write(client_socket,msgRead,sizeof(msgRead));
-  //printf("Wrote: %s",rot13Msg);
 }
 
 int main(int argc, char *argv[] ) { 

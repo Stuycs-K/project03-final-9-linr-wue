@@ -11,8 +11,6 @@
 #include "networking.h"
 #include "client_cmd.h"
 #define MAX 256
-// #define KEY 24602
-// #define SHMKEY 24605
 
 void clientLogic(int server_socket){
   char buffer[BUFFER_SIZE];
@@ -25,7 +23,7 @@ void clientLogic(int server_socket){
   strcpy(temp, msgToSend);
   char* first_cmd = strsep(&c, " ");
   // Commands selections
-  if (strcmp(first_cmd, "read") == 0) {   
+  if (strcmp(first_cmd, "read") == 0) {
     cread_data(server_socket, msgToSend);
   }
   else if (strcmp(first_cmd, "edit") == 0) {
@@ -59,9 +57,18 @@ void clientLogic(int server_socket){
     semop(semd, &sb, 1);
   }
   else{
-    printf("[Error] Command not found");
+    printf("Command not found");
   }
   printf("\n");
+  // char buffer[BUFFER_SIZE];
+  
+  // char msgToSend[64];
+  // printf("Enter a string to send: \n"); 
+  // fgets(msgToSend,sizeof(msgToSend),stdin);
+  // write(server_socket, msgToSend, strlen(msgToSend)+1);
+
+  // read(server_socket,buffer,sizeof(buffer));
+  // printf("Read from server: %s",buffer);
 }
 
 int main(int argc, char *argv[] ) {
@@ -70,7 +77,7 @@ int main(int argc, char *argv[] ) {
   if(argc>1){
     IP=argv[1];
   }
-  while (1) {
+  while (1){
     int server_socket = client_tcp_handshake(IP);
     printf("client connected.\n");
     clientLogic(server_socket);
