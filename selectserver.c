@@ -8,11 +8,13 @@
 #include <errno.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "networking.h"
+#include "server_cmd.h"
 
 int main(){
     struct addrinfo * hints, * results;
     hints = calloc(1,sizeof(struct addrinfo));
-    char* PORT = "19230";
+    //char* PORT = "19230";
     hints->ai_family = AF_INET;
     hints->ai_socktype = SOCK_STREAM; //TCP socket
     hints->ai_flags = AI_PASSIVE; //only needed on server
@@ -59,17 +61,34 @@ int main(){
             int client_socket = accept(listen_socket,(struct sockaddr *)&client_address, &sock_size);
             printf("Connected, waiting for data.\n");
 
-            //read the whole buff
-            read(client_socket,buff, sizeof(buff));
-            //trim the string
-            buff[strlen(buff)-1]=0; //clear newline
-            if(buff[strlen(buff)-1]==13){
-                //clear windows line ending
-                buff[strlen(buff)-1]=0;
+            printf("Listening to the client commands.\n");
+            char msgRead[BUFFER_SIZE];
+            read(client_socket,msgRead,sizeof(msgRead));
+
+            // command from client into array of arguments
+            char* cmd[20];
+            char* c = msgRead;
+            int i = 0;
+            while(cmd[i++] = strsep(&c, " "));
+            // command selection
+            if (strcmp(cmd[0], "read") == 0) {
+                sread_data(client_socket, cmd);
+            }
+            else if (strcmp(cmd[0], "edit") == 0) {
+                sedit_data(client_socket, cmd);
             }
 
-            printf("\nRecieved from client '%s'\n",buff);
-            close(client_socket);
+            // //read the whole buff
+            // read(client_socket,buff, sizeof(buff));
+            // //trim the string
+            // buff[strlen(buff)-1]=0; //clear newline
+            // if(buff[strlen(buff)-1]==13){
+            //     //clear windows line ending
+            //     buff[strlen(buff)-1]=0;
+            // }
+
+            // printf("\nRecieved from client '%s'\n",buff);
+            // close(client_socket);
         }
     }
 

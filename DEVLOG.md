@@ -43,3 +43,5 @@
 ### 2024-01-08 - Fixing semaphore, testing select server
 
 40 min - fixing semaphore/shared memory code; unsure if we will use shm; worked on some documentation; started testing select server
+
+35 min - messing around with select server, got the code to compile but will test tomorrow

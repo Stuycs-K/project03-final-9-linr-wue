@@ -19,12 +19,12 @@ server_cmd.o: server_cmd.c server_cmd.h
 	@gcc -c server_cmd.c
 
 # select test
-selectserver: selectserver.o 
-	@gcc -o select selectserver.o
+selectserver: selectserver.o networking.o  server_cmd.o
+	@gcc -o select selectserver.o networking.o server_cmd.o
 selectserver.o: selectserver.c
 	@gcc -c selectserver.c 
-selectclient: selectclient.o networking.o 
-	@gcc -o selectclient1 selectclient.o networking.o 
+selectclient: selectclient.o networking.o client_cmd.o
+	@gcc -o selectclient1 selectclient.o networking.o client_cmd.o
 selectclient.o: selectclient.c 
 	@gcc -c selectclient.c 
 
