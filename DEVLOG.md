@@ -45,3 +45,9 @@
 40 min - fixing semaphore/shared memory code; unsure if we will use shm; worked on some documentation; started testing select server
 
 35 min - messing around with select server, got the code to compile but will test tomorrow
+
+### 2024-01-09 - Fixing semaphore, testing select server
+
+40 min - found a few errors with select server code since I didn't have the right includes and such but I was able to fix it; we are unsure if we want to use select server still; was reading about sending a struct through the network using serialization but turns out that is not needed; discussed more info on what we need for project
+
+

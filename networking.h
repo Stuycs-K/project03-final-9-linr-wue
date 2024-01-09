@@ -21,7 +21,7 @@ struct pop_entry {
   char database[20];
   int year;
   int population;
-  char boro[15];
+  char command[15];
 };
 void err(int i, char*message);
 int server_setup();
