@@ -59,6 +59,7 @@ void cedit_data(int server_socket, char* input) {
         strcat(cmd, buffer);
     }
     // edit database_name operation -option col row a,b,c,d
+    printf("%s\n", cmd);
     write(server_socket, cmd, strlen(cmd) + 1);
     
     // server returns "Edit successful!"

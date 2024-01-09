@@ -54,13 +54,15 @@ void sedit_data(int client_socket, char** cmd) {
         add_(cmd);
     }
     else if (strcmp(cmd[2], "update") == 0) {
-        update_(cmd);
+        printf("1here!\n");
+        printf("%d\n", update_(cmd));
     }
     else if (strcmp(cmd[2], "delete") == 0) {
         delete_(cmd);
     }
+    printf("3here!\n");
     char msg[20] = "Edit successful!";
-    write(client_socket, msg, 20);
+    write(client_socket, msg, strlen(msg) + 1);
 
 
 }
@@ -85,7 +87,7 @@ void add_(char** cmd) {
     }
 
 }
-void update_(char** cmd) {
+int update_(char** cmd) {
     // edit database_name operation -option col row a,b,c,d
     if (strcmp(cmd[3], "-col") == 0) {
 
@@ -94,7 +96,9 @@ void update_(char** cmd) {
         
     }
     else if (strcmp(cmd[3], "-cel") == 0) {
-        update_cell(cmd);
+        // update_cell(cmd);
+        printf("2here!\n");
+        return 1;
     }
 }
 void delete_(char** cmd) {
