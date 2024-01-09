@@ -6,5 +6,5 @@ void sedit_data(int client_socket, char** cmd);
 void add_(char** cmd);
 void update_(char** cmd);
 void delete_(char** cmd);
-void remove_entry(FILE* fp, char* new);
+void update_cell(char** cmd);
 #endif

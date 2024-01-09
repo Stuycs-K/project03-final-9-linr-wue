@@ -19,7 +19,7 @@ int cread_data(int server_socket, char* input) {
     read(server_socket, buffer, MAX); // read from server number of lines
     int n = atoi(buffer);
     if (n == -1) { // database not exist
-        printf("[Error] Database does not exist.\n");
+        printf("[Error] Database does not exist\n");
         return -1;
     }
     else {

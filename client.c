@@ -59,7 +59,7 @@ void clientLogic(int server_socket){
     semop(semd, &sb, 1);
   }
   else{
-    printf("Command not found");
+    printf("[Error] Command not found");
   }
   printf("\n");
 }

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
@@ -74,12 +75,12 @@ void add_(char** cmd) {
     
     }
     else if (strcmp(cmd[3], "-row") == 0) {
-        int row = cmd[4];
-        while(int l = 0; l < row; l++) { // skips the lines before target
-            char temp[MAX];
-            fgets(temp, MAX, fp);
-        }
-        fputs(cmd[6], fp); // insert line
+        // int row = cmd[4];
+        // while(int l = 0; l < row; l++) { // skips the lines before target
+        //     char temp[MAX];
+        //     fgets(temp, MAX, fp);
+        // }
+        // fputs(cmd[6], fp); // insert line
         
     }
 
@@ -93,7 +94,7 @@ void update_(char** cmd) {
         
     }
     else if (strcmp(cmd[3], "-cel") == 0) {
-
+        update_cell(cmd);
     }
 }
 void delete_(char** cmd) {
@@ -105,6 +106,46 @@ void delete_(char** cmd) {
         
     }
 }
-void remove_entry(FILE* fp, char* new) {
+void update_cell(char** cmd) {
+    // edit database_name operation -option col row a,b,c,d
+    int col = atoi(cmd[4]);
+    int row = atoi(cmd[5]);
+    // open databases
+    FILE* old = fopen(cmd[1], "r");
+    char temp_name[20];
+    temp_name[0] = '\0';
+    strcat(temp_name, cmd[1]);
+    strcat(temp_name, "1");
+    int new = open(temp_name, O_CREAT | O_TRUNC | O_WRONLY, 0744);
+    // copy rows before target
+    char temp[MAX];
+    for (int r = 1; r < row; r++) { // skips the rows before target
+        fgets(temp, MAX, old);
+        write(new, temp, strlen(temp) + 1);
+    }
+    // copy cells before target
+    fgets(temp, MAX, old);
+    char* cell;
+    char* sp = temp;
+    for (int c = 1; c < col; c++) {
+        cell = strsep(&sp, ",");
+        write(new, cell, strlen(cell) + 1);
+        write(new, ",", 2);
+    }
+    // replace cell on target column
+    cell = strsep(&sp, ",");
+    write(new, cmd[6], strlen(cmd[6]) + 1);
+    // copy remaining cells after target
+    while ((cell = strsep(&sp, ",")) != NULL) { // updated cell is not the last cell of the row
+        write(new, ",", 2);
+        write(new, cell, strlen(cell) + 1);
+    }
+    // copy rows after target
+    while (fgets(temp, MAX, old) != NULL) {
+        write(new, temp, strlen(temp) + 1);
+    }
+    fclose(old);
+    rename(temp_name, cmd[1]);
+    close(new);
 }
 //______________________________FILE_MANIPULATION______________________________
