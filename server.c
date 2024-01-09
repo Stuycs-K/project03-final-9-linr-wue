@@ -65,9 +65,7 @@ int main(int argc, char *argv[] ) {
     pid_t p = fork();
     if (p == 0){
       printf("Listening to the client commands.\n");
-      while (1) {
         subserver_logic(client_socket);
-      }
     }
     else{
       close(client_socket);
