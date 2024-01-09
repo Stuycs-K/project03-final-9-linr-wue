@@ -8,10 +8,38 @@
 #include <errno.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <sys/shm.h> 
+#include <signal.h>
 #include "networking.h"
 #include "server_cmd.h"
 
+union semun { 
+   int              val;    /* Value for SETVAL */
+   struct semid_ds *buf;    /* Buffer for IPC_STAT, IPC_SET */
+   unsigned short  *array;  /* Array for GETALL, SETALL */
+   struct seminfo  *__buf;  /* Buffer for IPC_INFO */
+                            /* (Linux-specific) */
+};
+
+static void sighandler(int signo) {
+    if (signo == SIGINT){
+      char data[128];
+      int bytes; 
+      int semd = semget(KEY, 1, 0); //Getting value of semaphore
+      int shmid = shmget(SHMKEY, 0, 0); //Getting value of shared memory
+      shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
+      semctl(semd, IPC_RMID, 0); //Removing the semaphore
+      printf("Segment Deleted\n");
+      exit(0);
+    }
+}
+
 int main(){
+    signal(SIGINT, sighandler);
     struct addrinfo * hints, * results;
     hints = calloc(1,sizeof(struct addrinfo));
     //char* PORT = "19230";
@@ -40,6 +68,25 @@ int main(){
     sock_size = sizeof(client_address);
     fd_set read_fds;
     char buff[1025]="";
+
+    //making semaphore
+    int v, r;
+    int semd = semget(KEY, 1, IPC_CREAT | IPC_EXCL | 0644); //Creating the semaphore
+    if (semd == -1) { //Error in semaphore
+    printf("error %d: %s\n", errno, strerror(errno));
+    semd = semget(KEY, 1, 0);
+    v = semctl(semd, 0, GETVAL, 0); 
+    printf("semctl returned: %d\n", v); //Semaphore id will be 1
+    }
+    else { //No error in semaphore
+    union semun us;
+    us.val = 1;
+    r = semctl(semd, 0, SETVAL, us);
+    printf("semctl returned: %d\n", r); //setting semaphore value to 1
+    }
+    int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Creating the shared memory
+  
+  printf("Semaphore created\n");
 
     while(1){
 
@@ -89,6 +136,9 @@ int main(){
 
             // printf("\nRecieved from client '%s'\n",buff);
             // close(client_socket);
+        }
+        else{
+            close(listen_socket);
         }
     }
 
