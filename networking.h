@@ -19,10 +19,13 @@
 #define SHMKEY 24605
 struct pop_entry {
   char database[20];
-  int year;
-  int population;
   char command[15];
 };
+struct data{
+  int col;
+  int row;
+  char entry[20];
+}
 void err(int i, char*message);
 int server_setup();
 int client_tcp_handshake(char*server_address);
