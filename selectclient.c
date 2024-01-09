@@ -8,8 +8,8 @@ void clientLogic(int server_socket){
   fgets(msgToSend,sizeof(msgToSend),stdin);
   write(server_socket, msgToSend, strlen(msgToSend)+1);
 
-  read(server_socket,buffer,sizeof(buffer));
-  printf("Read from server: %s",buffer);
+  // read(server_socket,buffer,sizeof(buffer));
+  // printf("Read from server: %s",buffer);
 }
 
 int main(int argc, char *argv[] ) {

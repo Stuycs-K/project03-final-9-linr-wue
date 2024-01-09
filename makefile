@@ -1,5 +1,5 @@
 .PHONY: clean run compile control
-compile: clientComp serverComp semControl semWrite selectserver
+compile: clientComp serverComp semControl semWrite selectserver selectclient
 
 # main client and server
 clientComp: client.o networking.o client_cmd.o
@@ -23,7 +23,7 @@ selectserver: selectserver.o
 	@gcc -o select selectserver.o
 selectserver.o: selectserver.c
 	@gcc -c selectserver.c 
-selectclient: client.o networking.o 
+selectclient: selectclient.o networking.o 
 	@gcc -o selectclient1 selectclient.o networking.o 
 selectclient.o: selectclient.c 
 	@gcc -c selectclient.c 
