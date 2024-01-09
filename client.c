@@ -25,7 +25,7 @@ void clientLogic(int server_socket){
   strcpy(temp, msgToSend);
   char* first_cmd = strsep(&c, " ");
   // Commands selections
-  if (strcmp(first_cmd, "read") == 0) {   
+  if (strcmp(first_cmd, "read") == 0) {
     cread_data(server_socket, msgToSend);
   }
   else if (strcmp(first_cmd, "edit") == 0) {
