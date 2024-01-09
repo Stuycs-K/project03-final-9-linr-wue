@@ -24,6 +24,12 @@ void clientLogic(int server_socket){
   char* c = temp;
   strcpy(temp, msgToSend);
   char* first_cmd = strsep(&c, " ");
+  //Making a struct
+  struct pop_entry clientStruct = malloc(sizeof(struct pop_entry) * 1);
+  
+
+
+
   // Commands selections
   if (strcmp(first_cmd, "read") == 0) {
     cread_data(server_socket, msgToSend);

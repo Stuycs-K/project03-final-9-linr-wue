@@ -18,6 +18,7 @@
 #define KEY 24602
 #define SHMKEY 24605
 struct pop_entry {
+  char database[20];
   int year;
   int population;
   char boro[15];
