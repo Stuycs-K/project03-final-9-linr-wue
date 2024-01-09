@@ -56,11 +56,12 @@ void cedit_data(int server_socket, char* input) {
         printf("Enter entries: ");
         fgets(buffer, MAX, stdin);
         strcat(cmd, " ");
+        rm_newline(buffer);
         strcat(cmd, buffer);
     }
     // edit database_name operation -option col row a,b,c,d
     printf("%s\n", cmd);
-    write(server_socket, cmd, strlen(cmd) + 1);
+    write(server_socket, cmd, sizeof(cmd));
     
     // server returns "Edit successful!"
     read(server_socket, buffer, 20);
