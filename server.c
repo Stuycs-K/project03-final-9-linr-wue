@@ -37,6 +37,7 @@ static void sighandler(int signo) {
 }
 
 void subserver_logic(int client_socket){
+  printf("Listening to the client commands.\n");
   char msgRead[BUFFER_SIZE];
   read(client_socket,msgRead,sizeof(msgRead));
 
@@ -44,15 +45,12 @@ void subserver_logic(int client_socket){
   char* cmd[20];
   char* c = msgRead;
   int i = 0;
-  while(cmd[i++] = strsep(&c, " ")) {
-    printf("%s\n", cmd[i]);
-  }
+  while(cmd[i++] = strsep(&c, " "));
   // command selection
   if (strcmp(cmd[0], "read") == 0) {
     sread_data(client_socket, cmd);
   }
   else if (strcmp(cmd[0], "edit") == 0) {
-    printf("here!\n");
     sedit_data(client_socket, cmd);
   }
 }
@@ -64,8 +62,7 @@ int main(int argc, char *argv[] ) {
     int client_socket = server_tcp_handshake(listen_socket);
     pid_t p = fork();
     if (p == 0){
-      printf("Listening to the client commands.\n");
-        subserver_logic(client_socket);
+      subserver_logic(client_socket);
     }
     else{
       close(client_socket);
