@@ -21,6 +21,11 @@
 
 50 min - fixing read function.
 
+### 2024-01-08 - Working on replace cell function
+40 min - modifying replace cell function for server.
+
+30 min - fixing bug and writing tests
+
 ## Eric Wu
 
 ### 2024-01-04 - Setting up project; reviewing code
