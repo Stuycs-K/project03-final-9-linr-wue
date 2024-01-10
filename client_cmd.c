@@ -44,8 +44,8 @@ void cedit_data(int server_socket, char* input) {
     strcat(cmd, input);
     strcat(cmd, " ");
 
-    if (cread_data(server_socket, input) == -1) // read and print database
-        return; 
+    // if (cread_data(server_socket, read_cmd) == -1) // read and print database
+    //     return; 
 
     // user prompt
     printf("Enter the edit you would like to make: ");
@@ -64,7 +64,7 @@ void cedit_data(int server_socket, char* input) {
     write(server_socket, cmd, sizeof(cmd));
     
     // server returns "Edit successful!"
-    read(server_socket, buffer, 20);
+    read(server_socket, buffer, sizeof(buffer));
     printf("%s\n", buffer);
 }
 

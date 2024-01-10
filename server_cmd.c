@@ -14,17 +14,17 @@ int sread_data(int client_socket, char** cmd) {
     FILE* fp = fopen(cmd[1], "r");
     if (fp == NULL) { // database does not exist
         char temp[4] = "-1";
-        write(client_socket, temp, strlen(temp) + 1); // write -1 to client
+        write(client_socket, temp, sizeof(temp)); // write -1 to client
         return -1;
     }
     else { // database exists
         char buffer[MAX];
         int n = count_line(cmd[1]);
         sprintf(buffer, "%d", n);
-        write(client_socket, buffer, strlen(buffer) + 1); // write to client number of lines
+        write(client_socket, buffer, sizeof(buffer)); // write to client number of lines
         usleep(250);
         while (fgets(buffer, MAX, fp) != NULL) {
-            write(client_socket, buffer, strlen(buffer) + 1); // write to client line by line 
+            write(client_socket, buffer, sizeof(buffer)); // write to client line by line 
             usleep(250);
         }
         fclose(fp);
@@ -45,9 +45,9 @@ int count_line(char* database_name) {
 }
 
 // edit database for client
-void sedit_data(int client_socket, char** cmd) {
-    if (sread_data(client_socket, cmd) == -1) // read database to client
-        return;
+int sedit_data(int client_socket, char** cmd) {
+    // if (sread_data(client_socket, cmd) == -1) // read database to client
+    //     write;
 
     // edit database_name operation -option 0 0 a,b,c,d
     if (strcmp(cmd[2], "add") == 0) {
