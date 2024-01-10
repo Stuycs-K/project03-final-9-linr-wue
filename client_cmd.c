@@ -13,7 +13,7 @@
 int cread_data(int server_socket, char* input) {
     rm_newline(input);
     // read database_name
-    write(server_socket, input, strlen(input) + 1);
+    write(server_socket, input, sizeof(input));
 
     char buffer[MAX];
     read(server_socket, buffer, MAX); // read from server number of lines
@@ -52,7 +52,7 @@ void cedit_data(int server_socket, char* input) {
     fgets(buffer, MAX, stdin);
 
     //making data struct to send
-    struct pop_entry *data = malloc(sizeof(struct data) * 1);
+    struct data *data = malloc(sizeof(struct data) * 1);
     // strcpy(data->col, strsep(&buffer, " "));
     // strcpy(data->row, strsep(&buffer, " "));
 
