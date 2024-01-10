@@ -23,9 +23,10 @@ int cread_data(int server_socket, char* input) {
         return -1;
     }
     else {
+        int l = 1;
         while(n > 0) { // read from server line by line
             read(server_socket, buffer, MAX);
-            printf("\t%s", buffer);
+            printf("\t%d| %s", l++, buffer);
             n--;
         }
     }
@@ -34,7 +35,7 @@ int cread_data(int server_socket, char* input) {
 
 // update database in the server
 // operations: add, update, delete
-// options: col col_num, row row_num, cel col_num row_num(cel only for update)
+// options: col col_num, row row_num, cel col_num row_num (cel only for update)
 // entries: separated by comma (no entry for delete)
 void cedit_data(int server_socket, char* input) {
     char buffer[MAX];
