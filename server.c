@@ -54,9 +54,7 @@ void subserver_logic(int client_socket){
     sread_data(client_socket, cmd);
   }
   else if (strcmp(cmd[0], "edit") == 0) {
-    char msg[20] = "Edit successful!";
-    write(client_socket, msg, sizeof(msg));
-    // sedit_data(client_socket, cmd);
+    sedit_data(client_socket, cmd);
   }
 }
 

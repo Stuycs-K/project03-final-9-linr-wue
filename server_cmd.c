@@ -54,15 +54,14 @@ int sedit_data(int client_socket, char** cmd) {
         add_(cmd);
     }
     else if (strcmp(cmd[2], "update") == 0) {
-        printf("1here!\n");
-        printf("%d\n", update_(cmd));
+        update_(cmd);
     }
     else if (strcmp(cmd[2], "delete") == 0) {
         delete_(cmd);
     }
     printf("3here!\n");
     char msg[20] = "Edit successful!";
-    write(client_socket, msg, strlen(msg) + 1);
+    write(client_socket, msg, sizeof(msg));
 
 
 }
@@ -96,7 +95,7 @@ int update_(char** cmd) {
         
     }
     else if (strcmp(cmd[3], "-cel") == 0) {
-        // update_cell(cmd);
+        update_cell(cmd);
         printf("2here!\n");
         return 1;
     }
@@ -118,14 +117,18 @@ void update_cell(char** cmd) {
     FILE* old = fopen(cmd[1], "r");
     char temp_name[20];
     temp_name[0] = '\0';
+    strcat(temp_name, "temp_");
     strcat(temp_name, cmd[1]);
-    strcat(temp_name, "1");
-    int new = open(temp_name, O_CREAT | O_TRUNC | O_WRONLY, 0744);
+
+    printf("\t%s\n", temp_name);
+
+    FILE* new = fopen(temp_name, "w");
     // copy rows before target
     char temp[MAX];
     for (int r = 1; r < row; r++) { // skips the rows before target
         fgets(temp, MAX, old);
-        write(new, temp, strlen(temp) + 1);
+        printf("\t%s", temp);
+        fputs(temp, new);
     }
     // copy cells before target
     fgets(temp, MAX, old);
@@ -133,23 +136,31 @@ void update_cell(char** cmd) {
     char* sp = temp;
     for (int c = 1; c < col; c++) {
         cell = strsep(&sp, ",");
-        write(new, cell, strlen(cell) + 1);
-        write(new, ",", 2);
+        fputs(cell, new);
+        fputs(",", new);
     }
     // replace cell on target column
     cell = strsep(&sp, ",");
-    write(new, cmd[6], strlen(cmd[6]) + 1);
+    fputs(cmd[6], new);
     // copy remaining cells after target
-    while ((cell = strsep(&sp, ",")) != NULL) { // updated cell is not the last cell of the row
-        write(new, ",", 2);
-        write(new, cell, strlen(cell) + 1);
+    cell = strsep(&sp, ",");
+    if (cell == NULL) {
+        fputs("\n", new);
+    }
+    else { // updated cell is not the last cell of the row
+        while (cell != NULL) {
+            fputs(",", new);
+            fputs(cell, new);
+            cell = strsep(&sp, ",");
+        }
     }
     // copy rows after target
     while (fgets(temp, MAX, old) != NULL) {
-        write(new, temp, strlen(temp) + 1);
+        fputs(temp, new);
     }
     fclose(old);
-    rename(temp_name, cmd[1]);
-    close(new);
+    // remove(cmd[1]);
+    // rename(temp_name, cmd[1]);
+    fclose(new);
 }
 //______________________________FILE_MANIPULATION______________________________
