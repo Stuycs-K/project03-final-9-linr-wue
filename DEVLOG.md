@@ -21,10 +21,15 @@
 
 50 min - fixing read function.
 
-### 2024-01-08 - Working on replace cell function
-40 min - modifying replace cell function for server.
+### 2024-01-08 - Working on update cell function
+40 min - modifying update cell function for server.
 
-30 min - fixing bug and writing tests
+30 min - fixing bug and writing tests.
+
+### 2024-01-09 - Working on update cell function
+30 min - fixing problems with sending command to server.
+
+45 min - modifying and testing update cell function.
 
 ## Eric Wu
 
@@ -50,3 +55,9 @@
 40 min - fixing semaphore/shared memory code; unsure if we will use shm; worked on some documentation; started testing select server
 
 35 min - messing around with select server, got the code to compile but will test tomorrow
+
+### 2024-01-09 - Fixing semaphore, testing select server, working on structs
+
+40 min - found a few errors with select server code since I didn't have the right includes and such but I was able to fix it; we are unsure if we want to use select server still; was reading about sending a struct through the network using serialization but turns out that is not needed; discussed more info on what we need for project
+
+30 min - created helper functions to place semaphores in; working on structs - one to hold the command and database name for easy readability in code and the other to send entry updates to the server

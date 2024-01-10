@@ -14,6 +14,39 @@
 // #define KEY 24602
 // #define SHMKEY 24605
 
+void accessSem(){
+  int semd;
+  int r;
+  int v;
+  int *data;
+  int shmid;
+  char buffer[128];
+  shmid = shmget(SHMKEY, 0, 0);//Gets shared memory
+  semd = semget(KEY, 1, 0);//Gets semaphore
+  if (semd == -1) { //Error in semaphore
+    printf("No semaphore exists!\n");
+    printf("error %d: %s\n", errno, strerror(errno));
+    semd = semget(KEY, 1, 0);
+    v = semctl(semd, 0, GETVAL, 0); 
+    printf("Semctl returned: %d\n", v); //Semaphore id will be 1
+  }
+  printf("Attempting to open semaphore.\n");
+  struct sembuf sb;
+  sb.sem_num = 0;
+  sb.sem_op = -1; //Using the semaphore by downing value of semaphore
+  semop(semd, &sb, 1); //Setting sempahore value to 1 so others can't use it
+  printf("Semaphore accessed!\n");
+}
+
+void upSem(){
+  int semd;
+  struct sembuf sb;
+  semd = semget(KEY, 1, 0);//Gets semaphore
+
+  sb.sem_op = 1; //Upping value of semaphore to indicate another program can use it
+  semop(semd, &sb, 1);
+}
+
 void clientLogic(int server_socket){
   char buffer[BUFFER_SIZE];
   char msgToSend[64];
@@ -24,39 +57,21 @@ void clientLogic(int server_socket){
   char* c = temp;
   strcpy(temp, msgToSend);
   char* first_cmd = strsep(&c, " ");
+  //Making a struct
+  struct pop_entry *clientStruct = malloc(sizeof(struct pop_entry) * 1);
+  strcpy(clientStruct->database, strsep(&c, " "));
+
+
+  //write(server_socket,clientStruct,sizeof(struct pop_entry));
+
   // Commands selections
   if (strcmp(first_cmd, "read") == 0) {
     cread_data(server_socket, msgToSend);
   }
   else if (strcmp(first_cmd, "edit") == 0) {
-    //Accessing semaphore
-    int semd;
-    int r;
-    int v;
-    int *data;
-    int shmid;
-    char buffer[128];
-    shmid = shmget(SHMKEY, 0, 0);//Gets shared memory
-    semd = semget(KEY, 1, 0);//Gets semaphore
-    if (semd == -1) { //Error in semaphore
-      printf("No semaphore exists!\n");
-      printf("error %d: %s\n", errno, strerror(errno));
-      semd = semget(KEY, 1, 0);
-      v = semctl(semd, 0, GETVAL, 0); 
-      printf("Semctl returned: %d\n", v); //Semaphore id will be 1
-    }
-    printf("Attempting to open semaphore.\n");
-    struct sembuf sb;
-    sb.sem_num = 0;
-    sb.sem_op = -1; //Using the semaphore by downing value of semaphore
-    semop(semd, &sb, 1); //Setting sempahore value to 1 so others can't use it
-    printf("Semaphore accessed!\n");
-
-    //Thing to do inside semaphore
-    cedit_data(server_socket, msgToSend);
-
-    sb.sem_op = 1; //Upping value of semaphore to indicate another program can use it
-    semop(semd, &sb, 1);
+    accessSem(); //Accessing semaphore
+    cedit_data(server_socket, msgToSend); //Thing to do inside semaphore
+    upSem(); //Upping semaphore so other clients can use
   }
   else{
     printf("[Error] Command not found");

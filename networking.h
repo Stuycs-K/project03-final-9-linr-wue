@@ -11,13 +11,21 @@
 #include <sys/socket.h> 
 #include <netdb.h>
 
-
 #ifndef NETWORKING_H
 #define NETWORKING_H
 #define PORT "19230"
 #define BUFFER_SIZE 1024
 #define KEY 24602
 #define SHMKEY 24605
+struct pop_entry {
+  char database[20];
+  char command[15];
+};
+struct data{
+  int col;
+  int row;
+  char entry[20];
+}
 void err(int i, char*message);
 int server_setup();
 int client_tcp_handshake(char*server_address);
