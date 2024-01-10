@@ -21,10 +21,15 @@
 
 50 min - fixing read function.
 
-### 2024-01-08 - Working on replace cell function
-40 min - modifying replace cell function for server.
+### 2024-01-08 - Working on update cell function
+40 min - modifying update cell function for server.
 
-30 min - fixing bug and writing tests
+30 min - fixing bug and writing tests.
+
+### 2024-01-09 - Working on update cell function
+30 min - fixing problems with sending command to server.
+
+45 min - modifying and testing update cell function.
 
 ## Eric Wu
 
