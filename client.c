@@ -60,6 +60,10 @@ void clientLogic(int server_socket){
   struct pop_entry *clientStruct = malloc(sizeof(struct pop_entry) * 1);
   strcpy(clientStruct->command, strsep(&c, " "));
   strcpy(clientStruct->database, strsep(&c, " "));
+  printf("temp: %s ", temp);
+  printf("msgToSend: %s", msgToSend);
+  printf("cmd: %s ", clientStruct->command);
+  printf("databse name: %s", clientStruct->database);
 
   //write(server_socket,clientStruct,sizeof(struct pop_entry));
 

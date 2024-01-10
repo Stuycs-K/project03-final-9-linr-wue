@@ -43,7 +43,7 @@ void cedit_data(int server_socket, char* input) {
     rm_newline(input);
     strcat(cmd, input);
     strcat(cmd, " ");
-
+    
     if (cread_data(server_socket, input) == -1) // read and print database
         return; 
 
@@ -52,7 +52,7 @@ void cedit_data(int server_socket, char* input) {
     fgets(buffer, MAX, stdin);
 
     //making data struct to send
-    struct data *data = malloc(sizeof(struct data) * 1);
+    //struct data *data = malloc(sizeof(struct data) * 1);
     // strcpy(data->col, strsep(&buffer, " "));
     // strcpy(data->row, strsep(&buffer, " "));
 
