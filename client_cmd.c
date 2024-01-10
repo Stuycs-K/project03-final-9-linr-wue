@@ -13,7 +13,7 @@
 int cread_data(int server_socket, char* input) {
     rm_newline(input);
     // read database_name
-    write(server_socket, input, sizeof(input));
+    write(server_socket, input, strlen(input) + 1);
 
     char buffer[MAX];
     read(server_socket, buffer, MAX); // read from server number of lines
@@ -43,7 +43,7 @@ void cedit_data(int server_socket, char* input) {
     rm_newline(input);
     strcat(cmd, input);
     strcat(cmd, " ");
-    
+
     if (cread_data(server_socket, input) == -1) // read and print database
         return; 
 
