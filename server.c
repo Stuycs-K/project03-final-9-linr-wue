@@ -11,7 +11,9 @@
 #include <signal.h>
 #include "networking.h"
 #include "server_cmd.h"
-#define MAX 20
+#define MAX 256
+// #define KEY 24602
+// #define SHMKEY 24605
 
 union semun { 
    int              val;    /* Value for SETVAL */
@@ -36,14 +38,16 @@ static void sighandler(int signo) {
 
 void subserver_logic(int client_socket){
   printf("Listening to the client commands.\n");
-  char msgRead[BUFFER_SIZE];
+  char msgRead[MAX];
   read(client_socket,msgRead,sizeof(msgRead));
 
   // command from client into array of arguments
   char* cmd[20];
   char* c = msgRead;
   int i = 0;
-  while(cmd[i++] = strsep(&c, " "));
+  while(cmd[i++] = strsep(&c, " ")) {
+    // printf("%s\n", cmd[i - 1]);
+  };
   // command selection
   if (strcmp(cmd[0], "read") == 0) {
     sread_data(client_socket, cmd);

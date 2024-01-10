@@ -79,7 +79,7 @@ void clientLogic(int server_socket){
     upSem(); //Upping semaphore so other clients can use
   }
   else{
-    printf("Command not found");
+    printf("[Error] Command not found");
   }
   printf("\n");
 }

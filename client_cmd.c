@@ -19,7 +19,7 @@ int cread_data(int server_socket, char* input) {
     read(server_socket, buffer, MAX); // read from server number of lines
     int n = atoi(buffer);
     if (n == -1) { // database not exist
-        printf("[Error] Database does not exist.\n");
+        printf("[Error] Database does not exist\n");
         return -1;
     }
     else {
@@ -34,7 +34,7 @@ int cread_data(int server_socket, char* input) {
 
 // update database in the server
 // operations: add, update, delete
-// options: col -1 col_num, row row_num -1, cel row_num col_num (cel only for update)
+// options: col col_num, row row_num, cel col_num row_num(cel only for update)
 // entries: separated by comma (no entry for delete)
 void cedit_data(int server_socket, char* input) {
     char buffer[MAX];
@@ -44,8 +44,8 @@ void cedit_data(int server_socket, char* input) {
     strcat(cmd, input);
     strcat(cmd, " ");
 
-    if (cread_data(server_socket, input) == -1) // read and print database
-        return; 
+    // if (cread_data(server_socket, read_cmd) == -1) // read and print database
+    //     return;
 
     // user prompt
     printf("Enter the edit you would like to make: ");
@@ -62,15 +62,16 @@ void cedit_data(int server_socket, char* input) {
         printf("Enter entries: ");
         fgets(buffer, MAX, stdin);
         strcat(cmd, " ");
+        rm_newline(buffer);
         strcat(cmd, buffer);
         //strcpy(data->entry, strsep(&buffer, " "));
     }
-    // edit database_name operation -option 0 0 a,b,c,d
-    write(server_socket, cmd, strlen(cmd) + 1);
-    //write(server_socket, data, sizeof(struct data));
+    // edit database_name operation -option col row a,b,c,d
+    printf("%s\n", cmd);
+    write(server_socket, cmd, sizeof(cmd));
     
     // server returns "Edit successful!"
-    read(server_socket, buffer, 20);
+    read(server_socket, buffer, sizeof(buffer));
     printf("%s\n", buffer);
 }
 
