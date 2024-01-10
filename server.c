@@ -12,8 +12,6 @@
 #include "networking.h"
 #include "server_cmd.h"
 #define MAX 20
-// #define KEY 24602
-// #define SHMKEY 24605
 
 union semun { 
    int              val;    /* Value for SETVAL */

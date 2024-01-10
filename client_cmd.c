@@ -50,6 +50,12 @@ void cedit_data(int server_socket, char* input) {
     // user prompt
     printf("Enter the edit you would like to make: ");
     fgets(buffer, MAX, stdin);
+
+    //making data struct to send
+    struct pop_entry *data = malloc(sizeof(struct data) * 1);
+    // strcpy(data->col, strsep(&buffer, " "));
+    // strcpy(data->row, strsep(&buffer, " "));
+
     rm_newline(buffer);
     strcat(cmd, buffer);
     if (buffer[0] != 'd') { // add or update
@@ -57,9 +63,11 @@ void cedit_data(int server_socket, char* input) {
         fgets(buffer, MAX, stdin);
         strcat(cmd, " ");
         strcat(cmd, buffer);
+        //strcpy(data->entry, strsep(&buffer, " "));
     }
     // edit database_name operation -option 0 0 a,b,c,d
     write(server_socket, cmd, strlen(cmd) + 1);
+    //write(server_socket, data, sizeof(struct data));
     
     // server returns "Edit successful!"
     read(server_socket, buffer, 20);
