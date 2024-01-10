@@ -45,9 +45,8 @@ void subserver_logic(int client_socket){
   char* cmd[20];
   char* c = msgRead;
   int i = 0;
-  printf("%s\n", msgRead);
   while(cmd[i++] = strsep(&c, " ")) {
-    printf("%s\n", cmd[i - 1]);
+    // printf("%s\n", cmd[i - 1]);
   };
   // command selection
   if (strcmp(cmd[0], "read") == 0) {

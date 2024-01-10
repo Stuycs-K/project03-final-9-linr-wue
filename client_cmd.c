@@ -34,7 +34,7 @@ int cread_data(int server_socket, char* input) {
 
 // update database in the server
 // operations: add, update, delete
-// options: col col_num -1, row -1 row_num, cel col_num row_num(cel only for update)
+// options: col col_num, row row_num, cel col_num row_num(cel only for update)
 // entries: separated by comma (no entry for delete)
 void cedit_data(int server_socket, char* input) {
     char buffer[MAX];
@@ -45,7 +45,7 @@ void cedit_data(int server_socket, char* input) {
     strcat(cmd, " ");
 
     // if (cread_data(server_socket, read_cmd) == -1) // read and print database
-    //     return; 
+    //     return;
 
     // user prompt
     printf("Enter the edit you would like to make: ");

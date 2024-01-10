@@ -45,9 +45,9 @@ int count_line(char* database_name) {
 }
 
 // edit database for client
-int sedit_data(int client_socket, char** cmd) {
-    // if (sread_data(client_socket, cmd) == -1) // read database to client
-    //     write;
+void sedit_data(int client_socket, char** cmd) {
+    if (sread_data(client_socket, cmd) == -1) // read database to client
+        return;
 
     // edit database_name operation -option 0 0 a,b,c,d
     if (strcmp(cmd[2], "add") == 0) {
@@ -59,7 +59,6 @@ int sedit_data(int client_socket, char** cmd) {
     else if (strcmp(cmd[2], "delete") == 0) {
         delete_(cmd);
     }
-    printf("3here!\n");
     char msg[20] = "Edit successful!";
     write(client_socket, msg, sizeof(msg));
 
@@ -76,12 +75,6 @@ void add_(char** cmd) {
     
     }
     else if (strcmp(cmd[3], "-row") == 0) {
-        // int row = cmd[4];
-        // while(int l = 0; l < row; l++) { // skips the lines before target
-        //     char temp[MAX];
-        //     fgets(temp, MAX, fp);
-        // }
-        // fputs(cmd[6], fp); // insert line
         
     }
 
@@ -96,7 +89,6 @@ int update_(char** cmd) {
     }
     else if (strcmp(cmd[3], "-cel") == 0) {
         update_cell(cmd);
-        printf("2here!\n");
         return 1;
     }
 }
@@ -119,9 +111,6 @@ void update_cell(char** cmd) {
     temp_name[0] = '\0';
     strcat(temp_name, "temp_");
     strcat(temp_name, cmd[1]);
-
-    printf("\t%s\n", temp_name);
-
     FILE* new = fopen(temp_name, "w");
     // copy rows before target
     char temp[MAX];
@@ -159,8 +148,8 @@ void update_cell(char** cmd) {
         fputs(temp, new);
     }
     fclose(old);
-    // remove(cmd[1]);
-    // rename(temp_name, cmd[1]);
+    remove(cmd[1]);
+    rename(temp_name, cmd[1]);
     fclose(new);
 }
 //______________________________FILE_MANIPULATION______________________________
