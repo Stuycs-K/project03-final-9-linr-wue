@@ -53,7 +53,7 @@ void cedit_data(int server_socket, char* input) {
     fgets(buffer, MAX, stdin);
 
     //making data struct to send
-    struct pop_entry *data = malloc(sizeof(struct data) * 1);
+    //struct data *data = malloc(sizeof(struct data) * 1);
     // strcpy(data->col, strsep(&buffer, " "));
     // strcpy(data->row, strsep(&buffer, " "));
 

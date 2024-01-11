@@ -66,7 +66,8 @@ void sedit_data(int client_socket, char** cmd) {
 }
 // helper functions
 void add_(char** cmd) {
-    // edit database_name operation -option col row a,b,c,d
+    // edit database_name operation -option col a,b,c,d
+    // edit database_name operation -option row a,b,c,d
     char buffer[MAX];
     int fd = open(cmd[1], O_WRONLY, 0744);
     FILE* fp = fopen(cmd[1], "r+");
@@ -75,7 +76,35 @@ void add_(char** cmd) {
     
     }
     else if (strcmp(cmd[3], "-row") == 0) {
+        int row = atoi(cmd[5]);
+        // open databases
+        FILE* old = fopen(cmd[1], "r");
+        char temp_name[20];
+        temp_name[0] = '\0';
+        strcat(temp_name, "temp_");
+        strcat(temp_name, cmd[1]);
+        FILE* new = fopen(temp_name, "w");
+        // copy rows before target
+        char temp[MAX];
+        for (int r = 1; r < row; r++) { // skips the rows before target
+            fgets(temp, MAX, old);
+            printf("\t%s", temp);
+            fputs(temp, new);
+        }
+        //adding new row
+        // char * rowContent = "";
+        // for (int i = 4; cmd[i] != NULL; i++){
+        //     strcat(row,cmd[i]);
+        // }
         
+        // copy rows after target
+        while (fgets(temp, MAX, old) != NULL) {
+            fputs(temp, new);
+        }
+        fclose(old);
+        remove(cmd[1]);
+        rename(temp_name, cmd[1]);
+        fclose(new);
     }
 
 }
