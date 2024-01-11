@@ -28,12 +28,12 @@ void accessSem(){
     v = semctl(semd, 0, GETVAL, 0); 
     printf("Semctl returned: %d\n", v); //Semaphore id will be 1
   }
-  printf("Attempting to open semaphore.\n");
+  printf("Someone else is editing file.\n");
   struct sembuf sb;
   sb.sem_num = 0;
   sb.sem_op = -1; //Using the semaphore by downing value of semaphore
   semop(semd, &sb, 1); //Setting sempahore value to 1 so others can't use it
-  printf("Semaphore accessed!\n");
+  printf("You can now edit the file!\n");
 }
 
 void upSem(){
@@ -60,7 +60,6 @@ void clientLogic(int server_socket){
   struct pop_entry *clientStruct = malloc(sizeof(struct pop_entry) * 1);
   strcpy(clientStruct->command, strsep(&c, " "));
   strcpy(clientStruct->database, strsep(&c, " "));
-
   //write(server_socket,clientStruct,sizeof(struct pop_entry));
 
   // Commands selections
@@ -88,7 +87,7 @@ int main(int argc, char *argv[] ) {
   }
   while (1) {
     int server_socket = client_tcp_handshake(IP);
-    printf("client connected.\n");
+    printf("Client connected.\n");
     clientLogic(server_socket);
   }
 }

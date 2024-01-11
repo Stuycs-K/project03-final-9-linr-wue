@@ -97,7 +97,7 @@ void add_row(char** cmd) {
 
     char buffer[MAX];
     FILE* fp = fopen(cmd[1], "r+");
-    int row = atoi(cmd[5]);
+    int row = atoi(cmd[4]);
     // open databases
     FILE* old = fopen(cmd[1], "r");
     char temp_name[20];
@@ -113,13 +113,13 @@ void add_row(char** cmd) {
         fputs(temp, new);
     }
     //adding new row
-    char * newRow = cmd[5];
-    //strcat(newRow,"\n");
-    fputs(newRow,new);
+    // char * newRow = cmd[5];
+    // strcat(newRow,"\n");
+    fputs(cmd[5],new);
     //copy rows after target
-    // while (fgets(temp, MAX, old) != NULL) {
-    //     fputs(temp, new);
-    // }
+    while (fgets(temp, MAX, old) != NULL) {
+        fputs(temp, new);
+    }
     fputs(cmd[5],new);
     fclose(old);
     remove(cmd[1]);
