@@ -94,10 +94,9 @@ void sedit_data(int client_socket, char** cmd) {
 // helper functions
 void add_row(char** cmd) {
     // edit database_name operation -row row a,b,c,d
-    char buffer[MAX];
-    int fd = open(cmd[1], O_WRONLY, 0744);
-    FILE* fp = fopen(cmd[1], "r+");
 
+    char buffer[MAX];
+    FILE* fp = fopen(cmd[1], "r+");
     int row = atoi(cmd[5]);
     // open databases
     FILE* old = fopen(cmd[1], "r");
@@ -114,12 +113,14 @@ void add_row(char** cmd) {
         fputs(temp, new);
     }
     //adding new row
+    char * newRow = cmd[5];
+    //strcat(newRow,"\n");
+    fputs(newRow,new);
+    //copy rows after target
+    // while (fgets(temp, MAX, old) != NULL) {
+    //     fputs(temp, new);
+    // }
     fputs(cmd[5],new);
-    
-    // copy rows after target
-    while (fgets(temp, MAX, old) != NULL) {
-        fputs(temp, new);
-    }
     fclose(old);
     remove(cmd[1]);
     rename(temp_name, cmd[1]);
