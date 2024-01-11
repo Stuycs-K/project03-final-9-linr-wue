@@ -129,7 +129,24 @@ void add_row(char** cmd) {
     fclose(new);
 }
 void delete_row(char** cmd) {
-
+    // edit database_name operation -option row a,b,c,d
+    int row = atoi(cmd[4]);
+    // open databases
+    FILE* old = fopen(cmd[1], "r");
+    char temp_name[20];
+    temp_name[0] = '\0';
+    strcat(temp_name, "temp_");
+    strcat(temp_name, cmd[1]);
+    FILE* new = fopen(temp_name, "w");
+    // copy rows before target
+    char temp[MAX];
+    for (int r = 1; fgets(temp, MAX, old) != NULL; r++) { // skips the rows before target
+        if (r != row) {
+            fputs(temp, new);
+        }
+    }
+    fclose(old);
+    fclose(new);
 }
 void update_cel(char** cmd) {
     // edit database_name operation -option col row a,b,c,d
