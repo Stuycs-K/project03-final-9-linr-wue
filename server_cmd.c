@@ -75,7 +75,23 @@ void add_(char** cmd) {
     
     }
     else if (strcmp(cmd[3], "-row") == 0) {
-        
+        // edit database_name operation -option col row a,b,c,d
+        int col = atoi(cmd[4]);
+        int row = atoi(cmd[5]);
+        // open databases
+        FILE* old = fopen(cmd[1], "r");
+        char temp_name[20];
+        temp_name[0] = '\0';
+        strcat(temp_name, "temp_");
+        strcat(temp_name, cmd[1]);
+        FILE* new = fopen(temp_name, "w");
+        // copy rows before target
+        char temp[MAX];
+        for (int r = 1; r < row; r++) { // skips the rows before target
+            fgets(temp, MAX, old);
+            printf("\t%s", temp);
+            fputs(temp, new);
+        }
     }
 
 }
