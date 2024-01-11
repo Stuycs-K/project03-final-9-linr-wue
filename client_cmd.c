@@ -3,12 +3,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+
+#include "networking.h"
 #include "client_cmd.h"
-#define MAX 256
 
 //______________________________DATABASE_MANIPULATION______________________________
 // char* input: command line input with newline at the end
-
 // read from server and print the database
 int cread_data(int server_socket, char* input) {
     rm_newline(input);
@@ -45,9 +45,6 @@ void cedit_data(int server_socket, char* input) {
     strcat(cmd, input);
     strcat(cmd, " ");
 
-    // if (cread_data(server_socket, read_cmd) == -1) // read and print database
-    //     return;
-
     // user prompt
     printf("Enter the edit you would like to make: ");
     fgets(buffer, MAX, stdin);
@@ -75,9 +72,7 @@ void cedit_data(int server_socket, char* input) {
     read(server_socket, buffer, sizeof(buffer));
     printf("%s\n", buffer);
 }
-
-// --------------------Helper-Functions--------------------
-// replace newline at the end of user input with null
+// helper functions
 void rm_newline(char* s) {
     for (int i = 0; i < strlen(s); i++) {
         if (s[i] == '\n') {
