@@ -75,8 +75,6 @@ void add_(char** cmd) {
     
     }
     else if (strcmp(cmd[3], "-row") == 0) {
-        // edit database_name operation -option col row a,b,c,d
-        int col = atoi(cmd[4]);
         int row = atoi(cmd[5]);
         // open databases
         FILE* old = fopen(cmd[1], "r");
@@ -92,6 +90,16 @@ void add_(char** cmd) {
             printf("\t%s", temp);
             fputs(temp, new);
         }
+        //adding new row
+        
+        // copy rows after target
+        while (fgets(temp, MAX, old) != NULL) {
+            fputs(temp, new);
+        }
+        fclose(old);
+        remove(cmd[1]);
+        rename(temp_name, cmd[1]);
+        fclose(new);
     }
 
 }
