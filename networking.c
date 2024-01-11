@@ -9,8 +9,6 @@
 #include <sys/shm.h> 
 #include <unistd.h>
 #include "networking.h"
-// #define KEY 24602
-// #define SHMKEY 24605
 
 union semun { 
    int              val;    /* Value for SETVAL */
@@ -69,7 +67,7 @@ int server_setup() {
   int clientd = socket(results->ai_family, results->ai_socktype, results->ai_protocol); //create the socket
   int yes = 1;
   int sockOpt =  setsockopt(clientd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
-  err(sockOpt,"sockopt  error"); //this code should get around the address in use error
+  err(sockOpt,"sockopt error"); //this code should get around the address in use error
   bind(clientd, results->ai_addr, results->ai_addrlen); //bind the socket to address and port
   listen(clientd, 10); //set socket to listen state
   free(hints); //free the structs used by getaddrinfo
