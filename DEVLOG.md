@@ -31,6 +31,13 @@
 
 45 min - modifying and testing update cell function.
 
+### 2024-01-10 - Working on read output formatting
+25 min - discussing other commands for database.
+
+15 min - formatting outputto include row and column number.
+
+45 min - making the columns line up.
+
 ## Eric Wu
 
 ### 2024-01-04 - Setting up project; reviewing code
