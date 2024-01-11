@@ -145,6 +145,8 @@ void delete_row(char** cmd) {
             fputs(temp, new);
         }
     }
+    remove(cmd[1]);
+    rename(temp_name, cmd[1]);
     fclose(old);
     fclose(new);
 }
