@@ -6,6 +6,7 @@
 
 #include "networking.h"
 #include "client_cmd.h"
+#define COL_LEN -20
 
 //______________________________DATABASE_MANIPULATION______________________________
 // char* input: command line input with newline at the end
@@ -23,15 +24,57 @@ int cread_data(int server_socket, char* input) {
         return -1;
     }
     else {
-        int l = 1;
+        int r = 1;
+        int is_first = 1;
         while(n > 0) { // read from server line by line
             read(server_socket, buffer, MAX);
-            printf("\t%d| %s", l++, buffer);
+            char* cell;
+            char* s;
+            int c = 0;
+            if (is_first) { // print column index
+                char temp[MAX];
+                strcpy(temp, buffer);
+                s = temp;
+                while ((cell = strsep(&s, ",")) != NULL) {
+                    c++;
+                }
+                printf("\t    ");
+                for (int i = 1; i <= c; i++) {
+                    if (i == c) {
+                        printf(" %-1d", i);
+                    }
+                    else {
+                        printf(" %*d", COL_LEN, i);
+                    }
+                }
+                printf("\n\t");
+                int length = strlen(buffer) + 1;
+                for (int i = 0; i < 3 * length; i++) {
+                    printf("-");
+                }
+                printf("\n");
+                is_first--;
+            }
+            printf("\t%-3d|", r++); // print row index
+            s = buffer;
+            int i = 1;
+            while ((cell = strsep(&s, ",")) != NULL) {
+                if (i == c) {
+                    rm_newline(cell);
+                    int width = strlen(cell) + 1;
+                    printf(" %*s", -1 * width, cell);
+                }
+                else {
+                    printf(" %*s", COL_LEN, cell);
+                }
+            }
+            printf("\n");
             n--;
         }
     }
     return 0;
 }
+// helper functions
 
 // update database in the server
 // operations: add, update, delete
