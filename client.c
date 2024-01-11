@@ -54,19 +54,26 @@ void clientLogic(int server_socket){
   char temp[MAX];
   char* c = temp;
   strcpy(temp, msgToSend);
-  char* first_cmd = strsep(&c, " ");
+  //char* first_cmd = strsep(&c, " ");
+
   //Making a struct
   struct pop_entry *clientStruct = malloc(sizeof(struct pop_entry) * 1);
+  strcpy(clientStruct->command, strsep(&c, " "));
   strcpy(clientStruct->database, strsep(&c, " "));
-
+  printf("temp: %s ", temp);
+  printf("msgToSend: %s", msgToSend);
+  printf("cmd: %s ", clientStruct->command);
+  printf("databse name: %s", clientStruct->database);
 
   //write(server_socket,clientStruct,sizeof(struct pop_entry));
 
   // Commands selections
-  if (strcmp(first_cmd, "read") == 0) {
+  // if (strcmp(first_cmd, "read") == 0) {
+  if (strcmp(clientStruct->command, "read") == 0) {
     cread_data(server_socket, msgToSend);
   }
-  else if (strcmp(first_cmd, "edit") == 0) {
+  // else if (strcmp(first_cmd, "edit") == 0) {
+  else if (strcmp(clientStruct->command, "edit") == 0) { 
     accessSem(); //Accessing semaphore
     cedit_data(server_socket, msgToSend); //Thing to do inside semaphore
     upSem(); //Upping semaphore so other clients can use

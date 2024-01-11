@@ -61,3 +61,9 @@
 40 min - found a few errors with select server code since I didn't have the right includes and such but I was able to fix it; we are unsure if we want to use select server still; was reading about sending a struct through the network using serialization but turns out that is not needed; discussed more info on what we need for project
 
 30 min - created helper functions to place semaphores in; working on structs - one to hold the command and database name for easy readability in code and the other to send entry updates to the server
+
+### 2024-01-10 - Discussing usage of structs, adding rows
+
+40 min - discussed the use of structs in our code, it works for the holding using it for command and database name but it would be hard to use it in database manipulation because I would have to refactor a lot of the code, so we are pushing it off a day or two to further decide; discussed ways to implement some of the code for database manipulation
+
+30 min - worked on the adding row function but got confused on how to implement the feature because of the way database manipulation is coded
