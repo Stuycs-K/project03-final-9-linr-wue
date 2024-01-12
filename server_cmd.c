@@ -98,7 +98,6 @@ void sort(char ** cmd){
 
 void add_row(char** cmd) {
     // edit database_name operation -row row a,b,c,d
-
     char buffer[MAX];
     FILE* fp = fopen(cmd[1], "r+");
     int row = atoi(cmd[4]);
@@ -131,7 +130,29 @@ void add_row(char** cmd) {
 }
 void update_row(char** cmd) {
     // edit database_name operation -option row a,b,c,d
-
+    int row = atoi(cmd[4]);
+    // open databases
+    FILE* old = fopen(cmd[1], "r");
+    char temp_name[20];
+    temp_name[0] = '\0';
+    strcat(temp_name, "temp_");
+    strcat(temp_name, cmd[1]);
+    FILE* new = fopen(temp_name, "w");
+    // copy rows before and after target
+    char temp[MAX];
+    for (int r = 1; fgets(temp, MAX, old) != NULL; r++) { // skips the rows before target
+        if (r != row) {
+            fputs(temp, new);
+        }
+        else {
+            fputs(cmd[5], new);
+            fputs("\n", new);
+        }
+    }
+    remove(cmd[1]);
+    rename(temp_name, cmd[1]);
+    fclose(old);
+    fclose(new);
 }
 void update_cel(char** cmd) {
     // edit database_name operation -option col row a,b,c,d
@@ -193,7 +214,7 @@ void delete_row(char** cmd) {
     strcat(temp_name, "temp_");
     strcat(temp_name, cmd[1]);
     FILE* new = fopen(temp_name, "w");
-    // copy rows before target
+    // copy rows before and after target
     char temp[MAX];
     for (int r = 1; fgets(temp, MAX, old) != NULL; r++) { // skips the rows before target
         if (r != row) {
