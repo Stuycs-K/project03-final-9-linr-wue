@@ -136,10 +136,6 @@ void update_cel(char** cmd) {
     // edit database_name operation -option col row a,b,c,d
     int col = atoi(cmd[4]);
     int row = atoi(cmd[5]);
-    if(cmd[6] == NULL) { // if no entry, clear cell
-        char blank[] = " ";
-        cmd[6] = blank; 
-    }
     // open databases
     FILE* old = fopen(cmd[1], "r");
     char temp_name[20];

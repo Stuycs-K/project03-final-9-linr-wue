@@ -102,9 +102,16 @@ void cedit_data(int server_socket, char* input) {
     if (buffer[0] != 'd') { // add or update
         printf("Enter entries: ");
         fgets(buffer, MAX, stdin);
-        strcat(cmd, " ");
-        rm_newline(buffer);
-        strcat(cmd, buffer);
+        if (strcmp(buffer, "\n") != 0) {
+            strcat(cmd, " ");
+            rm_newline(buffer);
+            strcat(cmd, buffer);
+        }
+        else {
+            buffer[0] = '~';
+            strcat(cmd, " ");
+            strcat(cmd, buffer);
+        }
         //strcpy(data->entry, strsep(&buffer, " "));
     }
     // edit database_name operation -option col row a,b,c,d
