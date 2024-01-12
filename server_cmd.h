@@ -7,4 +7,6 @@ void add_row(char** cmd);
 void update_row(char** cmd);
 void update_cel(char** cmd);
 void delete_row(char** cmd);
+void sortData(char ** cmd);
+void swap(char* x, char* y);
 #endif

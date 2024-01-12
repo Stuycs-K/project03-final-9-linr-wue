@@ -62,6 +62,7 @@ void sedit_data(int client_socket, char** cmd) {
         else if (strcmp(cmd[3], "-row") == 0) {
             // edit database_name add -row row_num a,b,c,d
             add_row(cmd);
+            sortData(cmd);
         }
     }
     else if (strcmp(cmd[2], "update") == 0) {
@@ -92,8 +93,25 @@ void sedit_data(int client_socket, char** cmd) {
     write(client_socket, msg, sizeof(msg)); // write message to client
 }
 // helper functions
-void sort(char ** cmd){
-    FILE* fp = fopen(cmd[1], "r");
+void sortData(char ** cmd){
+    FILE* old = fopen(cmd[1], "r");
+    char dataLines = count_line(cmd[1]);
+    char * contentArr[dataLines];
+    // char temp_name[20];
+    // temp_name[0] = '\0';
+    // strcat(temp_name, "temp_");
+    // strcat(temp_name, cmd[1]);
+    //FILE* new = fopen(temp_name, "w");
+    for (int i = 0; i < dataLines; i++){
+        strcpy(contentArr[i],fgets(temp,MAX,old));
+    }
+    int i; 
+    for (i = 0; i < dataLines; i++) 
+        printf("%s \n ", contentArr[i]); 
+    // fclose(old);
+    // remove(cmd[1]);
+    // rename(temp_name, cmd[1]);
+    // fclose(new);
 }
 
 void swap(char* x, char* y) 
