@@ -103,15 +103,13 @@ void cedit_data(int server_socket, char* input) {
         printf("Enter entries: ");
         fgets(buffer, MAX, stdin);
         if (strcmp(buffer, "\n") != 0) {
-            strcat(cmd, " ");
             rm_newline(buffer);
-            strcat(cmd, buffer);
         }
         else {
             buffer[0] = '~';
-            strcat(cmd, " ");
-            strcat(cmd, buffer);
         }
+        strcat(cmd, " ");
+        strcat(cmd, buffer);
         //strcpy(data->entry, strsep(&buffer, " "));
     }
     // edit database_name operation -option col row a,b,c,d
