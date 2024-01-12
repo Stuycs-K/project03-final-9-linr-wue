@@ -9,7 +9,7 @@
 #include <sys/shm.h> 
 #include <unistd.h>
 #include <signal.h>
-
+#include <time.h>
 #include "networking.h"
 #include "server_cmd.h"
 
@@ -35,7 +35,10 @@ static void sighandler(int signo) {
 }
 
 void subserver_logic(int client_socket){
-  printf("Listening to the client commands.\n");
+  time_t localTime = time(NULL);
+  char * timeStr = ctime(&localTime);
+  timeStr[strlen(timeStr)-1] = '\0';
+  printf("[%s] Listening to the client commands.\n",timeStr);
   char msgRead[MAX];
   read(client_socket,msgRead,sizeof(msgRead));
 
