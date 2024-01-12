@@ -9,7 +9,7 @@
 #include <sys/shm.h> 
 #include <unistd.h>
 #include <signal.h>
-
+#include <time.h>
 #include "networking.h"
 #include "server_cmd.h"
 
@@ -29,13 +29,16 @@ static void sighandler(int signo) {
       int shmid = shmget(SHMKEY, 0, 0); //Getting value of shared memory
       shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
       semctl(semd, IPC_RMID, 0); //Removing the semaphore
-      printf("Segment Deleted\n");
+      //printf("Segment Deleted\n");
       exit(0);
     }
 }
 
 void subserver_logic(int client_socket){
-  printf("Listening to the client commands.\n");
+  time_t localTime = time(NULL);
+  char * timeStr = ctime(&localTime);
+  timeStr[strlen(timeStr)-1] = '\0';
+  printf("[%s] Listening to the client commands.\n",timeStr);
   char msgRead[MAX];
   read(client_socket,msgRead,sizeof(msgRead));
 

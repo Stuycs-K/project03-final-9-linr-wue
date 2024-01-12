@@ -80,19 +80,17 @@ int server_setup() {
     printf("error %d: %s\n", errno, strerror(errno));
     semd = semget(KEY, 1, 0);
     v = semctl(semd, 0, GETVAL, 0); 
-    printf("semctl returned: %d\n", v); //Semaphore id will be 1
+    //printf("semctl returned: %d\n", v); //Semaphore id will be 1
   }
   else { //No error in semaphore
     union semun us;
     us.val = 1;
     r = semctl(semd, 0, SETVAL, us);
-    printf("semctl returned: %d\n", r); //setting semaphore value to 1
+    //printf("semctl returned: %d\n", r); //setting semaphore value to 1
   }
   int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Creating the shared memory
-
-  //int w_file = open("story.txt", O_RDWR | O_TRUNC | O_CREAT, 0666); //Opening a file for story
   
-  printf("Semaphore created\n");
+  printf("Server started!\n");
   
   return clientd;
 }
