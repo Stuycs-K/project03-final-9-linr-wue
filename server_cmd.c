@@ -96,17 +96,19 @@ void sedit_data(int client_socket, char** cmd) {
 void sortData(char ** cmd){
     FILE* old = fopen(cmd[1], "r");
     char dataLines = count_line(cmd[1]);
+    printf("%d",dataLines);
     char * contentArr[dataLines];
     // char temp_name[20];
     // temp_name[0] = '\0';
     // strcat(temp_name, "temp_");
     // strcat(temp_name, cmd[1]);
     //FILE* new = fopen(temp_name, "w");
+    char temp[MAX];
     for (int i = 0; i < dataLines; i++){
         strcpy(contentArr[i],fgets(temp,MAX,old));
+        printf("%s \n",contentArr[1]);
     }
-    int i; 
-    for (i = 0; i < dataLines; i++) 
+    for (int i = 0; i < dataLines; i++) 
         printf("%s \n ", contentArr[i]); 
     // fclose(old);
     // remove(cmd[1]);
