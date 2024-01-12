@@ -79,4 +79,4 @@
 
 40 min - worked on debugging the add row function and cleared up any confusion I had with the syntax and using the code
 
-30 min - tested the add row function and finally fixed it; added local timestamps to server requests;
+40 min - tested the add row function and finally fixed it; added local timestamps to server requests; worked on documentation, specifically the instructions on how the syntax for commands such as adding/deleting/updating data
