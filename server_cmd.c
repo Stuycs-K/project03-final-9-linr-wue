@@ -71,7 +71,7 @@ void sedit_data(int client_socket, char** cmd) {
         }
         else if (strcmp(cmd[3], "-row") == 0) {
             // edit database_name update -row row_num a,b,c,d
-            // update_row(cmd);
+            update_row(cmd);
         }
         else if (strcmp(cmd[3], "-cel") == 0) {
             // edit database_name update -cel col_num row_num a
@@ -128,32 +128,18 @@ void add_row(char** cmd) {
     rename(temp_name, cmd[1]);
     fclose(new);
 }
-void delete_row(char** cmd) {
+void update_row(char** cmd) {
     // edit database_name operation -option row a,b,c,d
-    int row = atoi(cmd[4]);
-    // open databases
-    FILE* old = fopen(cmd[1], "r");
-    char temp_name[20];
-    temp_name[0] = '\0';
-    strcat(temp_name, "temp_");
-    strcat(temp_name, cmd[1]);
-    FILE* new = fopen(temp_name, "w");
-    // copy rows before target
-    char temp[MAX];
-    for (int r = 1; fgets(temp, MAX, old) != NULL; r++) { // skips the rows before target
-        if (r != row) {
-            fputs(temp, new);
-        }
-    }
-    remove(cmd[1]);
-    rename(temp_name, cmd[1]);
-    fclose(old);
-    fclose(new);
+
 }
 void update_cel(char** cmd) {
     // edit database_name operation -option col row a,b,c,d
     int col = atoi(cmd[4]);
     int row = atoi(cmd[5]);
+    if(cmd[6] == NULL) { // if no entry, clear cell
+        char blank[] = " ";
+        cmd[6] = blank; 
+    }
     // open databases
     FILE* old = fopen(cmd[1], "r");
     char temp_name[20];
@@ -194,6 +180,28 @@ void update_cel(char** cmd) {
     // copy rows after target
     while (fgets(temp, MAX, old) != NULL) {
         fputs(temp, new);
+    }
+    remove(cmd[1]);
+    rename(temp_name, cmd[1]);
+    fclose(old);
+    fclose(new);
+}
+void delete_row(char** cmd) {
+    // edit database_name operation -option row a,b,c,d
+    int row = atoi(cmd[4]);
+    // open databases
+    FILE* old = fopen(cmd[1], "r");
+    char temp_name[20];
+    temp_name[0] = '\0';
+    strcat(temp_name, "temp_");
+    strcat(temp_name, cmd[1]);
+    FILE* new = fopen(temp_name, "w");
+    // copy rows before target
+    char temp[MAX];
+    for (int r = 1; fgets(temp, MAX, old) != NULL; r++) { // skips the rows before target
+        if (r != row) {
+            fputs(temp, new);
+        }
     }
     remove(cmd[1]);
     rename(temp_name, cmd[1]);
