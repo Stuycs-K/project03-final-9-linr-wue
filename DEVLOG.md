@@ -38,6 +38,11 @@
 
 45 min - making the columns line up.
 
+### 2024-01-11 - Working on delete row function
+30 min - working on delete row function
+
+25 min - working on clearing a cell ('~' represents a blank cell) if no entry is entered. 
+
 ## Eric Wu
 
 ### 2024-01-04 - Setting up project; reviewing code
