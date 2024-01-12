@@ -93,8 +93,15 @@ void sedit_data(int client_socket, char** cmd) {
 }
 // helper functions
 void sort(char ** cmd){
-
+    FILE* fp = fopen(cmd[1], "r");
 }
+
+void swap(char* x, char* y) 
+{ 
+    int temp = *x; 
+    *x = *y; 
+    *y = temp; 
+} 
 
 void add_row(char** cmd) {
     // edit database_name operation -row row a,b,c,d
