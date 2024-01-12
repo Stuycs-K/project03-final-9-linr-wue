@@ -28,7 +28,7 @@ void accessSem(){
     v = semctl(semd, 0, GETVAL, 0); 
     printf("Semctl returned: %d\n", v); //Semaphore id will be 1
   }
-  printf("Someone else is editing file.\n");
+  printf("Waiting to edit file.\n");
   struct sembuf sb;
   sb.sem_num = 0;
   sb.sem_op = -1; //Using the semaphore by downing value of semaphore

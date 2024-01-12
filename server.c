@@ -29,7 +29,7 @@ static void sighandler(int signo) {
       int shmid = shmget(SHMKEY, 0, 0); //Getting value of shared memory
       shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
       semctl(semd, IPC_RMID, 0); //Removing the semaphore
-      printf("Segment Deleted\n");
+      //printf("Segment Deleted\n");
       exit(0);
     }
 }
