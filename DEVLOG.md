@@ -75,8 +75,8 @@
 
 30 min - worked on the adding row function but got confused on how to implement the feature because of the way database manipulation is coded
 
-### 2024-01-11 - Finished adding rows
+### 2024-01-11 - Finished adding rows, adding timestamps, editing documentation
 
-40 min - discussed the use of structs in our code, it works for the holding using it for command and database name but it would be hard to use it in database manipulation because I would have to refactor a lot of the code, so we are pushing it off a day or two to further decide; discussed ways to implement some of the code for database manipulation
+40 min - worked on debugging the add row function and cleared up any confusion I had with the syntax and using the code
 
-30 min - worked on the adding row function but got confused on how to implement the feature because of the way database manipulation is coded
+30 min - tested the add row function and finally fixed it; added local timestamps to server requests;
