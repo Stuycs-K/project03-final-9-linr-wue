@@ -43,6 +43,11 @@
 
 25 min - working on clearing a cell ('~' represents a blank cell) if no entry is entered. 
 
+### 2024-01-12 - Working on update row function
+10 min - discussing implementation of sort function.
+
+35 min - working on update row.
+
 ## Eric Wu
 
 ### 2024-01-04 - Setting up project; reviewing code
