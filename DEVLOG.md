@@ -85,3 +85,7 @@
 40 min - worked on debugging the add row function and cleared up any confusion I had with the syntax and using the code
 
 40 min - tested the add row function and finally fixed it; added local timestamps to server requests; worked on documentation, specifically the instructions on how the syntax for commands such as adding/deleting/updating data
+
+### 2024-01-12 - Worked on sorting data
+
+40 min - started working on the sort data function, currently getting error with placing all of the data from data file into an array of strings to do selection sort; discussed our next and final steps: finishing sort, adding restrictions to number of entries user can add, being able to create a data file
