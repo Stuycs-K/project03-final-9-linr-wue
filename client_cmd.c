@@ -79,7 +79,7 @@ int cread_data(int server_socket, char* input) {
 // update database in the server
 // operations: add, update, delete
 // options: col col_num, row row_num, cel col_num row_num (cel only for update)
-// entries: separated by comma (no entry for delete)
+// entries: separated by comma (~ for empty cell)
 void cedit_data(int server_socket, char* input) {
     char buffer[MAX];
     char cmd[MAX];
@@ -127,5 +127,32 @@ void rm_newline(char* s) {
             s[i] = '\0';
         }
     }
+}
+
+// sort data in the server by the column entered
+// <: smallest to largest
+// >: largest to smallest
+void csort_data(int server_socket, char* input) {
+    // sort database_name order
+    // sort database_name order
+    char cmd[MAX];
+    cmd[0] = '\0';
+    rm_newline(input);
+    strcat(cmd, input);
+
+    // user prompt
+    char buffer[MAX];
+    printf("Enter the column you would like to sort the data by: ");
+    fgets(buffer, MAX, stdin);
+    rm_newline(buffer);
+    strcat(cmd, " ");
+    strcat(cmd, buffer);
+
+    // sort database_name order col_num
+    printf("%s\n", cmd);
+    write(server_socket, cmd, sizeof(cmd));
+
+    read(server_socket, buffer, sizeof(buffer));
+    printf("%s\n", buffer);
 }
 //______________________________FILE_MANIPULATION______________________________
