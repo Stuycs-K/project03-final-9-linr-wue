@@ -94,3 +94,5 @@
 ### 2024-01-12 - Worked on sorting data
 
 40 min - started working on the sort data function, currently getting error with placing all of the data from data file into an array of strings to do selection sort; discussed our next and final steps: finishing sort, adding restrictions to number of entries user can add, being able to create a data file
+
+### 2024-01-13 - Didn't work on project
