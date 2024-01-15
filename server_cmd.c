@@ -256,18 +256,13 @@ void ssort_data(int client_socket, char** cmd) {
     // sort rows
     while (fgets(min, MAX, old) != NULL) { // set min to first row
         min_row = 1;
-
         char min_cell[MAX];
-        strcpy(min_cell, find_cell(min, col));
-        printf("first: %s\n", min_cell);
-
+        strcpy(min_cell, find_cell(min, col)); // set minimum cell for the first row
         char cur_row[MAX];
         for (int r = 2; fgets(cur_row, MAX, old) != NULL; r++) { // compare min to rest of the rows
-            
             char cur_cell[MAX];
-            strcpy(cur_cell, find_cell(cur_row, col));
-            printf("\t%s\n", cur_cell);
-
+            strcpy(cur_cell, find_cell(cur_row, col)); // set current cell
+            // compare cells
             if (strcmp(cmd[2], "<") == 0 && strcmp(min_cell, cur_cell) > 0) { // sort from smallest to largest
                 strcpy(min, cur_row);
                 strcpy(min_cell, find_cell(min, col));
@@ -279,7 +274,7 @@ void ssort_data(int client_socket, char** cmd) {
                 min_row = r;
             }
         }
-        fputs(min, new);
+        fputs(min, new); // write min row into new database
         fclose(old);
         sort_delete_row(cmd[1], min_row); // remove min row from old database
         old = fopen(cmd[1], "r");
