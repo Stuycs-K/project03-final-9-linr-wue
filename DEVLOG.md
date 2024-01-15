@@ -48,6 +48,13 @@
 
 35 min - working on update row.
 
+### 2024-01-14 - Working on sort data function
+45 min - working on sort data function.
+
+30 min - modify sort data to be able to sort by column.
+
+30 min - modify sort data to be able to compare numbers and account for carriage return.
+
 ## Eric Wu
 
 ### 2024-01-04 - Setting up project; reviewing code

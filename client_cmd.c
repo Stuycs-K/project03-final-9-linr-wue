@@ -103,12 +103,7 @@ void cedit_data(int server_socket, char* input) {
     if (buffer[0] != 'd') { // add or update
         printf("Enter entries: ");
         fgets(buffer, MAX, stdin);
-        if (strcmp(buffer, "\n") != 0) {
-            rm_newline(buffer);
-        }
-        else {
-            buffer[0] = '~';
-        }
+        rm_newline(buffer);
         // strcat(cmd, " ");
         // strcat(cmd, buffer);
         // //checking if there are more entries than col
@@ -151,7 +146,7 @@ void cedit_data(int server_socket, char* input) {
 // helper functions
 void rm_newline(char* s) {
     for (int i = 0; i < strlen(s); i++) {
-        if (s[i] == '\n') {
+        if (s[i] == '\n' || s[i] == '\r') {
             s[i] = '\0';
         }
     }
