@@ -97,7 +97,8 @@
 
 ### 2024-01-13 - Didn't work on project
 
-### 2024-01-14 - Worked on entry restrictions
+### 2024-01-14 - Worked on entry restrictions, fixing sem bug
 
 40 min - worked on creating a check on the number of entries a user can add but i keep getting segfaults and a bunch of debugging doesn't work so I will come back to it
 
+20 min - fixed semaphore bug that didn't up the semaphore after its usage (almost), there are still a ton of bugs regarding that issue
