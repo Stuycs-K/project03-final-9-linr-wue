@@ -43,6 +43,11 @@
 
 25 min - working on clearing a cell ('~' represents a blank cell) if no entry is entered. 
 
+### 2024-01-12 - Working on update row function
+10 min - discussing implementation of sort function.
+
+35 min - working on update row.
+
 ## Eric Wu
 
 ### 2024-01-04 - Setting up project; reviewing code
@@ -85,3 +90,9 @@
 40 min - worked on debugging the add row function and cleared up any confusion I had with the syntax and using the code
 
 40 min - tested the add row function and finally fixed it; added local timestamps to server requests; worked on documentation, specifically the instructions on how the syntax for commands such as adding/deleting/updating data
+
+### 2024-01-12 - Worked on sorting data
+
+40 min - started working on the sort data function, currently getting error with placing all of the data from data file into an array of strings to do selection sort; discussed our next and final steps: finishing sort, adding restrictions to number of entries user can add, being able to create a data file
+
+### 2024-01-13 - Didn't work on project

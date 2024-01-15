@@ -3,13 +3,13 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <ctype.h> 
 
 #include "server_cmd.h"
 #define MAX 256
 
 //______________________________DATABASE_MANIPULATION______________________________
 // char** cmd: array of arguments from the client command
-
 // read database to client
 void sread_data(int client_socket, char** cmd) {
     FILE* fp = fopen(cmd[1], "r");
@@ -46,7 +46,7 @@ int count_line(char* database_name) {
 // edit database for client
 void sedit_data(int client_socket, char** cmd) {
     FILE* fp = fopen(cmd[1], "r");
-    char msg[32];
+    char msg[64];
     msg[0] = '\0';
     if (fp == NULL) { // database does not exist
         strcat(msg, "[Error] Database does not exist");
@@ -89,43 +89,11 @@ void sedit_data(int client_socket, char** cmd) {
             delete_row(cmd);
         }
     }
-    strcat(msg, "Edit successful!");
+    strcat(msg, "Database successfully modified!");
     write(client_socket, msg, sizeof(msg)); // write message to client
 }
-// helper functions
-void sortData(char ** cmd){
-    FILE* old = fopen(cmd[1], "r");
-    char dataLines = count_line(cmd[1]);
-    printf("%d",dataLines);
-    char * contentArr[dataLines];
-    // char temp_name[20];
-    // temp_name[0] = '\0';
-    // strcat(temp_name, "temp_");
-    // strcat(temp_name, cmd[1]);
-    //FILE* new = fopen(temp_name, "w");
-    char temp[MAX];
-    for (int i = 0; i < dataLines; i++){
-        strcpy(contentArr[i],fgets(temp,MAX,old));
-        printf("%s \n",contentArr[1]);
-    }
-    for (int i = 0; i < dataLines; i++) 
-        printf("%s \n ", contentArr[i]); 
-    // fclose(old);
-    // remove(cmd[1]);
-    // rename(temp_name, cmd[1]);
-    // fclose(new);
-}
-
-void swap(char* x, char* y) 
-{ 
-    int temp = *x; 
-    *x = *y; 
-    *y = temp; 
-} 
-
 void add_row(char** cmd) {
     // edit database_name operation -row row a,b,c,d
-
     char buffer[MAX];
     FILE* fp = fopen(cmd[1], "r+");
     int row = atoi(cmd[4]);
@@ -143,7 +111,7 @@ void add_row(char** cmd) {
         printf("\t%s", temp);
         fputs(temp, new);
     }
-    //adding new row
+    // adding new row
     char * newRow = cmd[5];
     strcat(newRow,"\n");
     fputs(newRow,new);
@@ -158,7 +126,29 @@ void add_row(char** cmd) {
 }
 void update_row(char** cmd) {
     // edit database_name operation -option row a,b,c,d
-
+    int row = atoi(cmd[4]);
+    // open databases
+    FILE* old = fopen(cmd[1], "r");
+    char temp_name[20];
+    temp_name[0] = '\0';
+    strcat(temp_name, "temp_");
+    strcat(temp_name, cmd[1]);
+    FILE* new = fopen(temp_name, "w");
+    // copy rows before and after target
+    char temp[MAX];
+    for (int r = 1; fgets(temp, MAX, old) != NULL; r++) { // skips the rows before target
+        if (r != row) {
+            fputs(temp, new);
+        }
+        else {
+            fputs(cmd[5], new);
+            fputs("\n", new);
+        }
+    }
+    remove(cmd[1]);
+    rename(temp_name, cmd[1]);
+    fclose(old);
+    fclose(new);
 }
 void update_cel(char** cmd) {
     // edit database_name operation -option col row a,b,c,d
@@ -211,7 +201,7 @@ void update_cel(char** cmd) {
     fclose(new);
 }
 void delete_row(char** cmd) {
-    // edit database_name operation -option row a,b,c,d
+    // edit database_name operation -option row
     int row = atoi(cmd[4]);
     // open databases
     FILE* old = fopen(cmd[1], "r");
@@ -220,7 +210,7 @@ void delete_row(char** cmd) {
     strcat(temp_name, "temp_");
     strcat(temp_name, cmd[1]);
     FILE* new = fopen(temp_name, "w");
-    // copy rows before target
+    // copy rows before and after target
     char temp[MAX];
     for (int r = 1; fgets(temp, MAX, old) != NULL; r++) { // skips the rows before target
         if (r != row) {
@@ -231,5 +221,99 @@ void delete_row(char** cmd) {
     rename(temp_name, cmd[1]);
     fclose(old);
     fclose(new);
+}
+
+// sort database for client
+void ssort_data(int client_socket, char** cmd) {
+    int col = atoi(cmd[3]);
+    // sort database_name order col_num
+    FILE* old = fopen(cmd[1], "r");
+    char msg[64];
+    msg[0] = '\0';
+    if (old == NULL) { // database does not exist
+        strcat(msg, "[Error] Database does not exist");
+        write(client_socket, msg, sizeof(msg)); // write error to client
+        return;
+    }
+    char temp_name[20];
+    temp_name[0] = '\0';
+    strcat(temp_name, "stemp_");
+    strcat(temp_name, cmd[1]);
+    FILE* new = fopen(temp_name, "w");
+
+    char min[MAX];
+    int min_row = 0;
+    if (count_line(cmd[1]) <= 1) { // do nothing if database is empty
+        strcat(msg, "Database successfully modified!");
+        write(client_socket, msg, sizeof(msg));
+        return;
+    }
+    // write categories into new
+    fgets(min, MAX, old);
+    fputs(min, new);
+    fclose(old);
+    sort_delete_row(cmd[1], 1);
+    old = fopen(cmd[1], "r");
+    // sort rows
+    while (fgets(min, MAX, old) != NULL) { // set min to first row
+        min_row = 1;
+        char min_cell[MAX];
+        strcpy(min_cell, find_cell(min, col)); // set minimum cell for the first row
+        char cur_row[MAX];
+        for (int r = 2; fgets(cur_row, MAX, old) != NULL; r++) { // compare min to rest of the rows
+            char cur_cell[MAX];
+            strcpy(cur_cell, find_cell(cur_row, col)); // set current cell
+            // compare cells
+            if (strcmp(cmd[2], "<") == 0 && strcmp(min_cell, cur_cell) > 0) { // sort from smallest to largest
+                strcpy(min, cur_row);
+                strcpy(min_cell, find_cell(min, col));
+                min_row = r;
+            }
+            else if (strcmp(cmd[2], ">") == 0 && strcmp(min_cell, cur_cell) < 0) { // sort from largest to smallest
+                strcpy(min, cur_row);
+                strcpy(min_cell, find_cell(min, col));
+                min_row = r;
+            }
+        }
+        fputs(min, new); // write min row into new database
+        fclose(old);
+        sort_delete_row(cmd[1], min_row); // remove min row from old database
+        old = fopen(cmd[1], "r");
+    }
+    remove(cmd[1]);
+    rename(temp_name, cmd[1]);
+    fclose(old);
+    fclose(new);
+    strcat(msg, "Database successfully modified!");
+    write(client_socket, msg, sizeof(msg));
+}
+// helper function
+void sort_delete_row(char* database_name, int min_row) {
+    char* delete_cmd[20];
+    delete_cmd[1] = database_name;
+    char row_num[8];
+    sprintf(row_num, "%d", min_row);
+    delete_cmd[4] = row_num;
+    delete_row(delete_cmd);
+}
+char* find_cell(char* row, int col) {
+    char temp[MAX];
+    strcpy(temp, row);
+    char* cell;
+    char* sp = temp;
+    for (int c = 1; c <= col; c++) {
+        cell = strsep(&sp, ",");
+    }
+    return cell;
+}
+int isNumber(char* cell) {
+    char* p = cell;
+    while (*p != '\0' || *p != '\n') {
+        if (isdigit(*p) == 0) {
+            return -1;
+        }
+        p++;
+    }
+    return atoi(cell);
 }
 //______________________________FILE_MANIPULATION______________________________

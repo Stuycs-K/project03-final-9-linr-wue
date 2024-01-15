@@ -7,6 +7,8 @@ void add_row(char** cmd);
 void update_row(char** cmd);
 void update_cel(char** cmd);
 void delete_row(char** cmd);
-void sortData(char ** cmd);
-void swap(char* x, char* y);
+void ssort_data(int client_socket, char** cmd);
+void sort_delete_row(char* database_name, int row);
+char* find_cell(char* row, int col);
+int isNumber(char* cell);
 #endif

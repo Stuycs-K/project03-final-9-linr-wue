@@ -56,6 +56,9 @@ void subserver_logic(int client_socket){
   else if (strcmp(cmd[0], "edit") == 0) {
     sedit_data(client_socket, cmd);
   }
+  else if (strcmp(cmd[0], "sort") == 0) {
+    ssort_data(client_socket, cmd);
+  }
 }
 
 int main(int argc, char *argv[] ) { 
