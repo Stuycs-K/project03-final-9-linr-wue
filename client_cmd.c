@@ -110,6 +110,22 @@ void cedit_data(int server_socket, char* input) {
         }
         strcat(cmd, " ");
         strcat(cmd, buffer);
+        //checking if there are more entries than col
+        char * entryCheck = buffer;
+        int entryNum = 0; 
+        FILE* fp = fopen(cmd[1], "r");
+        char temp[MAX];
+        if (fp == NULL) { // database does not exist
+            strcat(msg, "[Error] Database does not exist");
+            write(client_socket, msg, sizeof(msg)); // write error to client
+            return;
+        }
+        while (strsep(fgets(temp,MAX,fp),",") != NULL){
+            entryNum++;
+        }
+        printf("%d",entryNum);
+
+
         //strcpy(data->entry, strsep(&buffer, " "));
     }
     // edit database_name operation -option col row a,b,c,d

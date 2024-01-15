@@ -62,7 +62,7 @@ void sedit_data(int client_socket, char** cmd) {
         else if (strcmp(cmd[3], "-row") == 0) {
             // edit database_name add -row row_num a,b,c,d
             add_row(cmd);
-            sortData(cmd);
+            ssort_data(cmd);
         }
     }
     else if (strcmp(cmd[2], "update") == 0) {

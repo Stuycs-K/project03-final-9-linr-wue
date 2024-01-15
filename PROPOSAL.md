@@ -30,4 +30,6 @@ Basic database commands (read, write) to be done by Monday 1/8/24.
 
 Subserver to be set up by Tuesday 1/9/24.
 
-Add select by 1/11/24
+Finish all commands by Monday 1/15/24.
+
+Polish documentation and project by 1/16/24.
