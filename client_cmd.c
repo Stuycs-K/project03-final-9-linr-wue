@@ -153,15 +153,72 @@ void csort_data(int server_socket, char* input) {
 //______________________________FILE_MANIPULATION______________________________
 // create database in server
 void ccreate(int server_socket, char* input) {
+    rm_newline(input);
+    // create database_name
+    printf("%s\n", input);
+    write(server_socket, input, strlen(input) + 1);
 
+    char buffer[MAX];
+    read(server_socket, buffer, sizeof(buffer));
+    printf("%s\n", buffer);
 }
 
 // remove database in server
 void cremove(int server_socket, char* input) {
-    
+    rm_newline(input);
+    // remove database_name
+    printf("%s\n", input);
+    write(server_socket, input, strlen(input) + 1);
+
+    char buffer[MAX];
+    read(server_socket, buffer, sizeof(buffer));
+    printf("%s\n", buffer);
 }
 
-// lis all database in server
+// list all database in server
+// order: > or <
 void clist(int server_socket, char* input) {
-    
+    // list order
+    // list -l order
+    // list moddate order
+    // list -l moddate order
+    // list size order
+    // list -l size order
+    rm_newline(input);
+    char* input_ary[8];
+    char* s = input;
+    int i = 0;
+    while(input_ary[i++] = strsep(&s, " "));
+    i -= 2;
+
+    char cmd[MAX];
+    cmd[0] = '\0';
+    strcat(cmd, "ls");
+    if (strcmp(input_ary[1], "moddate") == 0 
+        || i == 3 && strcmp(input_ary[2], "moddate") == 0) {
+        strcat(cmd, " -t");
+    }
+    else if (strcmp(input_ary[1], "size") == 0
+        || i == 3 && strcmp(input_ary[2], "size") == 0) {
+        strcat(cmd, " -S");
+    }
+    if (strcmp(input_ary[1],"-l") == 0) {
+        strcat(cmd, " -l");
+    }
+    if (strcmp(input_ary[i], "<") == 0) {
+        strcat(cmd, " -r");
+    }
+    // list order -> ls (-r)
+    // list -l order ->  ls -l (-r)
+    // list moddate order -> ls -t (-r)
+    // list -l moddate order -> ls -l (-r)
+    // list size order -> ls -S (-r)
+    // list -l size order -> ls -S -l (-r)
+    printf("%s\n", cmd);
+    write(server_socket, cmd, sizeof(cmd));
+
+    char buffer[MAX]; 
+    read(server_socket, buffer, sizeof(buffer));
+    printf("%s\n", buffer);
 }
+//______________________________OTHER______________________________

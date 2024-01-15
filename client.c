@@ -78,6 +78,15 @@ void clientLogic(int server_socket){
     csort_data(server_socket, msgToSend);
     upSem();
   }
+  else if (strcmp(first_cmd, "create") == 0) {
+    ccreate(server_socket, msgToSend);
+  }
+  else if (strcmp(first_cmd, "remove") == 0) {
+    cremove(server_socket, msgToSend);
+  }
+  else if (strcmp(first_cmd, "list") == 0) {
+    clist(server_socket, msgToSend);
+  }
   else{
     printf("[Error] Command not found\n");
   }

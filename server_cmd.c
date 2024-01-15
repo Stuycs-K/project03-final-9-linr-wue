@@ -283,12 +283,12 @@ void ssort_data(int client_socket, char** cmd) {
                 }
             }
             else { // string cells
-                if (strcmp(cmd[2], "<") == 0 && strcmp(min_cell, cur_cell) > 0) { // smallest to largest
+                if (strcmp(cmd[2], ">") == 0 && strcmp(min_cell, cur_cell) > 0) { // A to Z
                 strcpy(min, cur_row);
                 strcpy(min_cell, find_cell(min, col));
                 min_row = r;
                 }
-                else if (strcmp(cmd[2], ">") == 0 && strcmp(min_cell, cur_cell) < 0) { // largest to smallest
+                else if (strcmp(cmd[2], "<") == 0 && strcmp(min_cell, cur_cell) < 0) { // Z to A
                     strcpy(min, cur_row);
                     strcpy(min_cell, find_cell(min, col));
                     min_row = r;
@@ -363,7 +363,7 @@ void sremove(int client_socket, char** cmd) {
         strcat(msg, "[Error] Database is currently in use");
     }
     else if (errno == ENOENT) {
-        strcat(msg, "[Error] Invalid database name")
+        strcat(msg, "[Error] Invalid database name");
     }
     else if (n == -1) {
         strcat(msg, "[Error] Removing database unsuccessful");
@@ -378,3 +378,4 @@ void sremove(int client_socket, char** cmd) {
 void slist(int client_socket, char** cmd) {
     
 }
+//______________________________OTHER______________________________

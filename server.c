@@ -59,6 +59,15 @@ void subserver_logic(int client_socket){
   else if (strcmp(cmd[0], "sort") == 0) {
     ssort_data(client_socket, cmd);
   }
+  else if (strcmp(cmd[0], "create") == 0) {
+    screate(client_socket, cmd);
+  }
+  else if (strcmp(cmd[0], "remove") == 0) {
+    sremove(client_socket, cmd);
+  }
+  else if (strcmp(cmd[0], "ls") == 0) {
+    slist(client_socket, cmd);
+  }
 }
 
 int main(int argc, char *argv[] ) { 
