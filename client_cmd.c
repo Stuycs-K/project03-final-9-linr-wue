@@ -6,7 +6,7 @@
 
 #include "networking.h"
 #include "client_cmd.h"
-#define COL_LEN -20
+#define COL_LEN -16
 
 //______________________________DATABASE_MANIPULATION______________________________
 // char* input: command line input with newline at the end
@@ -217,8 +217,13 @@ void clist(int server_socket, char* input) {
     printf("%s\n", cmd);
     write(server_socket, cmd, sizeof(cmd));
 
-    char buffer[MAX]; 
-    read(server_socket, buffer, sizeof(buffer));
-    printf("%s\n", buffer);
+    char buffer[MAX];
+    read(server_socket, buffer, MAX); // read from server number of lines
+    int n = atoi(buffer);
+    while (n > 0) {
+        read(server_socket, buffer, sizeof(buffer));
+        printf("\t%s", buffer);
+        n--;
+    }
 }
 //______________________________OTHER______________________________

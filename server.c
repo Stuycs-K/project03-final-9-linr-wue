@@ -41,6 +41,8 @@ void subserver_logic(int client_socket){
   printf("[%s] Listening to the client commands.\n",timeStr);
   char msgRead[MAX];
   read(client_socket,msgRead,sizeof(msgRead));
+  char cmd_line[MAX];
+  strcpy(cmd_line, msgRead); // save a copy of command for list
 
   // command from client into array of arguments
   char* cmd[20];
@@ -66,7 +68,7 @@ void subserver_logic(int client_socket){
     sremove(client_socket, cmd);
   }
   else if (strcmp(cmd[0], "ls") == 0) {
-    slist(client_socket, cmd);
+    slist(client_socket, cmd_line);
   }
 }
 

@@ -13,5 +13,5 @@ char* find_cell(char* row, int col);
 int is_number(char* cell);
 void screate(int client_socket, char** cmd);
 void sremove(int client_socket, char** cmd);
-void slist(int client_socket, char** cmd);
+void slist(int client_socket, char* cmd);
 #endif

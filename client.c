@@ -54,7 +54,7 @@ void clientLogic(int server_socket){
   char temp[MAX];
   char* c = temp;
   strcpy(temp, msgToSend);
-  char* first_cmd = strsep(&c, " ");
+  char* first_cmd = strsep(&c, " \n");
 
   //Making a struct
   // struct pop_entry *clientStruct = malloc(sizeof(struct pop_entry) * 1);

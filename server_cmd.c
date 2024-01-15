@@ -375,7 +375,26 @@ void sremove(int client_socket, char** cmd) {
 }
 
 // list all database
-void slist(int client_socket, char** cmd) {
-    
+void slist(int client_socket, char* cmd) {
+    // find number of lines in ls stdout
+    FILE* fp = popen(cmd, "r");
+    int n = 0;
+    for (char c = getc(fp); c != EOF; c = getc(fp)) {
+        if (c == '\n') {
+            n++;
+        }
+    }
+    pclose(fp);
+    char buffer[MAX];
+    sprintf(buffer, "%d", n);
+    write(client_socket, buffer, sizeof(buffer)); // write to client number of lines
+    usleep(250);
+    // write to client line by line
+    fp = popen(cmd, "r");
+    while (fgets(buffer, MAX, fp) != NULL) {
+        write(client_socket, buffer, sizeof(buffer));
+        usleep(250);
+    }
+    pclose(fp);
 }
 //______________________________OTHER______________________________
