@@ -11,16 +11,16 @@ This project utilizes the C programming language to create a simple database tha
   
 ### Instructions:
 
-## Compiling and running the program
+### Compiling and running the program
 
 To run the program, you must first compile the program by typing **"make compile"** in the terminal.
 
 After compiling all of the files, run **"./server"** in the terminal to start the server. To access the network as a client, type "./client" from a different terminal 
 or computer. To access from another computer, run **"./client"** in the terminal with the IP address of the computer e.g "./client 149.89.161.100".
 
-## Interacting with the program
+# Interacting with the program
 
-# Running the program
+## Running the program
 
 To start off, the user must have a data file that they would like to access.
 
@@ -28,33 +28,33 @@ Then, the user must start the server by running "./server" in the terminal. The 
 
 The client will connect to the server and will ask for a command.
 
-# Creating a data file
+## Creating a data file
 
 If the user wants to create a data file, they should type "read (file_name)" in the terminal. 
 
-# Deleting a data file
+## Deleting a data file
 
 If the user wants to delete a data file, they should type "read (file_name)" in the terminal. 
 
-# Reading the data file
+## Reading the data file
 
 If the user wants to view the data file, they should type "read (file_name)" in the terminal. 
 
-# Sorting the data
+## Sorting the data
 
 If the user wants to sort the data file, they should type "sort (file_name) (>/<)" in the terminal. 
 Then, the user will be prompted to type the column they want to sort the data by.
 
-# Editing the data file
+## Editing the data file
 
 If the user wants to edit the data file, they should type "edit (file_name)" in the terminal. 
 Then, the user will be prompted to enter the change they want to make. 
 
-# The edit commands
+## The edit commands
 
 The three main edit commands are: adding a row, deleting a row/column or cell, and updating a row/column/cell. 
 
-# Syntax
+## Syntax
 
 The general syntax for rows/col would be **"(operation) -(row/col) (row/col #)"**.
 
@@ -62,20 +62,20 @@ The general syntax for a cell would be **"(operation) -cel (col #) (row #)"**.
 
 *Note*: When editing rows/columns/cells, the columns and rows start at 1, not 0.
 
-# Adding a row
+## Adding a row
 
 To add a row: the syntax would be **"add -row (row #)"**. 
 The user will then be prompted to add the entries for the row and fill out an entire row for the data. 
 They should then type in the entries with commas in between and no spaces. 
 For example, if there are 5 columns, the entries to be added would be "a,b,c,d,e". 
 
-# Deleting a row/column/cell
+## Deleting a row/column/cell
 
 To delete a row/column: the syntax would be **"delete -(row/col) (row/col #)"**. This will delete the row or column.
 
 To delete a cell, just apply the syntax for a cell.
 
-# Updating a row/column/cell
+## Updating a row/column/cell
 
 To update a row/column: the syntax would be **"update -(row/col) (row/col #)"**. The user will then be prompted to add the entries for the row. The user will have to fill out an entire row for the data. 
 They should then type in the entries with commas in between and no spaces. 
@@ -101,4 +101,4 @@ edit text.data update -row 4 hi,a,y
 Database successfully modified!
 ```
 
-### Bugs
+## Bugs
