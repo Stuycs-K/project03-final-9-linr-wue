@@ -74,9 +74,9 @@ void clientLogic(int server_socket){
     upSem(); //Upping semaphore so other clients can use
   }
   else if (strcmp(first_cmd, "sort") == 0) {
-    // accessSem();
+    accessSem();
     csort_data(server_socket, msgToSend);
-    // upSem();
+    upSem();
   }
   else{
     printf("[Error] Command not found\n");
