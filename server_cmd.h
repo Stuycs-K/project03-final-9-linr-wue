@@ -11,4 +11,7 @@ void ssort_data(int client_socket, char** cmd);
 void sort_delete_row(char* database_name, int row);
 char* find_cell(char* row, int col);
 int is_number(char* cell);
+void screate(char** cmd);
+void sremove(char** cmd);
+void slist(char** cmd);
 #endif

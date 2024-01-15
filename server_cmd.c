@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <ctype.h> 
+#include <errno.h> 
 
 #include "server_cmd.h"
 #define MAX 256
@@ -334,3 +335,43 @@ int is_number(char* cell) {
     return 1; // true
 }
 //______________________________FILE_MANIPULATION______________________________
+void screate(char** cmd) {
+    // create name
+    char msg[64];
+    msg[0] = '\0';
+    int fd = open(cmd[1], O_CREAT | O_EXCL, 0744);
+    if (errno == EEXIST) {
+        strcat(msg, "[Error] Database with the same name already exists");
+    }
+    else if (fd == -1) {
+        strcat(msg, "[Error] Creating database unsuccessful");
+    }
+    else {
+        strcat(msg, "Database successfully created!");
+    }
+    write(client_socket, msg, sizeof(msg));
+}
+
+void sremove(char** cmd) {
+    // remove name
+    char msg[64];
+    msg[0] = '\0';
+    int n = remove(cmd[1]);
+    if (errno == EBUSY) {
+        strcat(msg, "[Error] Database is currently in use");
+    }
+    else if (errno == ENOENT) {
+        strcat(msg, "[Error] Invalid database name")
+    }
+    else if (n == -1) {
+        strcat(msg, "[Error] Removing database unsuccessful");
+    }
+    else {
+        strcat(msg, "Database successfully removed!");
+    }
+    write(client_socket, msg, sizeof(msg));
+}
+
+void slist(char** cmd) {
+
+}
