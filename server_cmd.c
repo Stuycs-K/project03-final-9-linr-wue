@@ -335,7 +335,8 @@ int is_number(char* cell) {
     return 1; // true
 }
 //______________________________FILE_MANIPULATION______________________________
-void screate(char** cmd) {
+// create database
+void screate(int client_socket, char** cmd) {
     // create name
     char msg[64];
     msg[0] = '\0';
@@ -352,7 +353,8 @@ void screate(char** cmd) {
     write(client_socket, msg, sizeof(msg));
 }
 
-void sremove(char** cmd) {
+// remove database
+void sremove(int client_socket, char** cmd) {
     // remove name
     char msg[64];
     msg[0] = '\0';
@@ -372,6 +374,7 @@ void sremove(char** cmd) {
     write(client_socket, msg, sizeof(msg));
 }
 
-void slist(char** cmd) {
-
+// list all database
+void slist(int client_socket, char** cmd) {
+    
 }

@@ -151,3 +151,17 @@ void csort_data(int server_socket, char* input) {
     printf("%s\n", buffer);
 }
 //______________________________FILE_MANIPULATION______________________________
+// create database in server
+void ccreate(int server_socket, char* input) {
+
+}
+
+// remove database in server
+void cremove(int server_socket, char* input) {
+    
+}
+
+// lis all database in server
+void clist(int server_socket, char* input) {
+    
+}
