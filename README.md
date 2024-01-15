@@ -7,19 +7,18 @@ Ruize Lin, Eric Wu
        
 ### Project Description:
 
-Explain what is this project.
-This project utilizes the C programming language to create a simple database that uses networking, semaphores, processes, and editing files.
+This project utilizes the C programming language to create a simple database that uses networking, semaphores, processes, and editing files. In our database, users will be able to access their data file, and use a multitude of commands such as adding, updating, deleting, and sorting to play around with their data.
   
 ### Instructions:
 
-How does the user install/compile/run the program.
+## Compiling and running the program
 
-To run the program, compile the program by typing "make compile" in the terminal.
+To run the program, you must first compile the program by typing "make compile" in the terminal.
 
 After compiling all of the files, run "./server" in the terminal to start the server. To access the network as a client, type "./client" from a different terminal 
 or computer. To access from another computer, run "./client" in the terminal with the IP address of the computer e.g "./client 149.89.161.100".
 
-How does the user interact with this program?
+## Interacting with the program
 
 To start off, the user must have a data file that they would like to access.
 
@@ -53,3 +52,4 @@ They should then type in the entries with commas in between and no spaces.
 
 To update a cell, just apply the syntax for a cell and only type one entry.
 
+### Bugs

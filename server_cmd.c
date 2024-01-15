@@ -52,6 +52,13 @@ void sedit_data(int client_socket, char** cmd) {
     msg[0] = '\0';
     if (fp == NULL) { // database does not exist
         strcat(msg, "[Error] Database does not exist");
+
+        int semd;
+        struct sembuf sb;
+        semd = semget(KEY, 1, 0);//Gets semaphore
+        sb.sem_op = 1; //Upping value of semaphore to indicate another program can use it
+        semop(semd, &sb, 1);
+        
         write(client_socket, msg, sizeof(msg)); // write error to client
         return;
     }

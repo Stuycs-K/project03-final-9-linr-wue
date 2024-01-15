@@ -109,3 +109,5 @@
 40 min - worked on creating a check on the number of entries a user can add but i keep getting segfaults and a bunch of debugging doesn't work so I will come back to it
 
 20 min - fixed semaphore bug that didn't up the semaphore after its usage (almost), there are still a ton of bugs regarding that issue
+
+30 min - FINALLY FIXED SEMAPHORE BUG, worked on commenting out code that i will remove later, and changing just a little of the readme that will be polished tomorrow

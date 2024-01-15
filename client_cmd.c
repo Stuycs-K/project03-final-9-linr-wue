@@ -104,8 +104,8 @@ void cedit_data(int server_socket, char* input) {
         printf("Enter entries: ");
         fgets(buffer, MAX, stdin);
         rm_newline(buffer);
-        // strcat(cmd, " ");
-        // strcat(cmd, buffer);
+        strcat(cmd, " ");
+        strcat(cmd, buffer);
         // //checking if there are more entries than col
         // char * cmdCopy;
         // strcpy(cmdCopy,cmd);
@@ -136,12 +136,13 @@ void cedit_data(int server_socket, char* input) {
     
     // server returns "Edit successful!"
     read(server_socket, buffer, sizeof(buffer));
+    printf("%s\n", buffer);
+
     int semd;
     struct sembuf sb;
     semd = semget(KEY, 1, 0);//Gets semaphore
     sb.sem_op = 1; //Upping value of semaphore to indicate another program can use it
     semop(semd, &sb, 1);
-    printf("%s\n", buffer);
 }
 // helper functions
 void rm_newline(char* s) {

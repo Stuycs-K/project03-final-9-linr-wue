@@ -19,7 +19,7 @@ void accessSem(){
   int *data;
   int shmid;
   char buffer[128];
-  shmid = shmget(SHMKEY, 0, 0);//Gets shared memory
+  //shmid = shmget(SHMKEY, 0, 0);//Gets shared memory
   semd = semget(KEY, 1, 0);//Gets semaphore
   if (semd == -1) { //Error in semaphore
     printf("[Error] No semaphore exists\n");
