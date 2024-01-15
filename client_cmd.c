@@ -123,7 +123,7 @@ void cedit_data(int server_socket, char* input) {
 // helper functions
 void rm_newline(char* s) {
     for (int i = 0; i < strlen(s); i++) {
-        if (s[i] == '\n') {
+        if (s[i] == '\n' || s[i] == '\r') {
             s[i] = '\0';
         }
     }

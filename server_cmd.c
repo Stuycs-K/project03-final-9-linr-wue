@@ -263,15 +263,35 @@ void ssort_data(int client_socket, char** cmd) {
             char cur_cell[MAX];
             strcpy(cur_cell, find_cell(cur_row, col)); // set current cell
             // compare cells
-            if (strcmp(cmd[2], "<") == 0 && strcmp(min_cell, cur_cell) > 0) { // sort from smallest to largest
+            if (is_number(min_cell) && is_number(cur_cell)) { // numerical cells
+                double min_val, cur_val;
+                if (strcmp(min_cell, "~") == 0) min_val = 0.0;
+                else min_val = atof(min_cell);
+                if (strcmp(cur_cell, "~") == 0) cur_val = 0.0;
+                else cur_val = atof(cur_cell);
+
+                if (strcmp(cmd[2], "<") == 0 && min_val > cur_val) { // smallest to largest
                 strcpy(min, cur_row);
                 strcpy(min_cell, find_cell(min, col));
                 min_row = r;
+                }
+                else if (strcmp(cmd[2], ">") == 0 && min_val < cur_val) { // largest to smallest
+                    strcpy(min, cur_row);
+                    strcpy(min_cell, find_cell(min, col));
+                    min_row = r;
+                }
             }
-            else if (strcmp(cmd[2], ">") == 0 && strcmp(min_cell, cur_cell) < 0) { // sort from largest to smallest
+            else { // string cells
+                if (strcmp(cmd[2], "<") == 0 && strcmp(min_cell, cur_cell) > 0) { // smallest to largest
                 strcpy(min, cur_row);
                 strcpy(min_cell, find_cell(min, col));
                 min_row = r;
+                }
+                else if (strcmp(cmd[2], ">") == 0 && strcmp(min_cell, cur_cell) < 0) { // largest to smallest
+                    strcpy(min, cur_row);
+                    strcpy(min_cell, find_cell(min, col));
+                    min_row = r;
+                }
             }
         }
         fputs(min, new); // write min row into new database
@@ -301,18 +321,16 @@ char* find_cell(char* row, int col) {
     char* cell;
     char* sp = temp;
     for (int c = 1; c <= col; c++) {
-        cell = strsep(&sp, ",");
+        cell = strsep(&sp, ",\n\r");
     }
     return cell;
 }
-int isNumber(char* cell) {
-    char* p = cell;
-    while (*p != '\0' || *p != '\n') {
-        if (isdigit(*p) == 0) {
-            return -1;
+int is_number(char* input) {
+    for(int i = 0; cell[i] != '\0' && cell[i] != '\n'; i++) {
+        if (isdigit(cell[i]) == 0 && cell[i] != '~' && cell[i] != '.') {
+            return 0; // false
         }
-        p++;
     }
-    return atoi(cell);
+    return 1; // true
 }
 //______________________________FILE_MANIPULATION______________________________
