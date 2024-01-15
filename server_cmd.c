@@ -256,19 +256,27 @@ void ssort_data(int client_socket, char** cmd) {
     // sort rows
     while (fgets(min, MAX, old) != NULL) { // set min to first row
         min_row = 1;
-        // char* min_cell = find_cell(min, col);
-        if (count_line(cmd[1]) > 1) { // total row number > 1
-            char cur_row[MAX];
-            for (int r = 2; fgets(cur_row, MAX, old) != NULL; r++) { // compare min to rest of the rows
-                // char* cur_cell = find_cell(cur_row, col);
-                if (strcmp(cmd[2], "<") == 0 && strcmp(min, cur_row) > 0) { // sort from smallest to largest
-                    strcpy(min, cur_row);
-                    min_row = r;
-                }
-                else if (strcmp(cmd[2], ">") == 0 && strcmp(min, cur_row) < 0) { // sort from largest to smallest
-                    strcpy(min, cur_row);
-                    min_row = r;
-                }
+
+        char min_cell[MAX];
+        strcpy(min_cell, find_cell(min, col));
+        printf("first: %s\n", min_cell);
+
+        char cur_row[MAX];
+        for (int r = 2; fgets(cur_row, MAX, old) != NULL; r++) { // compare min to rest of the rows
+            
+            char cur_cell[MAX];
+            strcpy(cur_cell, find_cell(cur_row, col));
+            printf("\t%s\n", cur_cell);
+
+            if (strcmp(cmd[2], "<") == 0 && strcmp(min_cell, cur_cell) > 0) { // sort from smallest to largest
+                strcpy(min, cur_row);
+                strcpy(min_cell, find_cell(min, col));
+                min_row = r;
+            }
+            else if (strcmp(cmd[2], ">") == 0 && strcmp(min_cell, cur_cell) < 0) { // sort from largest to smallest
+                strcpy(min, cur_row);
+                strcpy(min_cell, find_cell(min, col));
+                min_row = r;
             }
         }
         fputs(min, new);
@@ -297,7 +305,7 @@ char* find_cell(char* row, int col) {
     strcpy(temp, row);
     char* cell;
     char* sp = temp;
-    for (int c = 2; c <= col; c++) {
+    for (int c = 1; c <= col; c++) {
         cell = strsep(&sp, ",");
     }
     return cell;
