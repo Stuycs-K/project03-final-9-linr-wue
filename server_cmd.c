@@ -325,7 +325,7 @@ char* find_cell(char* row, int col) {
     }
     return cell;
 }
-int is_number(char* input) {
+int is_number(char* cell) {
     for(int i = 0; cell[i] != '\0' && cell[i] != '\n'; i++) {
         if (isdigit(cell[i]) == 0 && cell[i] != '~' && cell[i] != '.') {
             return 0; // false

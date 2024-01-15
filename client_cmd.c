@@ -102,12 +102,7 @@ void cedit_data(int server_socket, char* input) {
     if (buffer[0] != 'd') { // add or update
         printf("Enter entries: ");
         fgets(buffer, MAX, stdin);
-        if (strcmp(buffer, "\n") != 0) {
-            rm_newline(buffer);
-        }
-        else {
-            buffer[0] = '~';
-        }
+        rm_newline(buffer);
         strcat(cmd, " ");
         strcat(cmd, buffer);
         //strcpy(data->entry, strsep(&buffer, " "));
