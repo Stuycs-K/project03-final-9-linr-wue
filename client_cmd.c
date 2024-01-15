@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <sys/sem.h>
 
 #include "networking.h"
 #include "client_cmd.h"
@@ -108,26 +109,28 @@ void cedit_data(int server_socket, char* input) {
         else {
             buffer[0] = '~';
         }
-        strcat(cmd, " ");
-        strcat(cmd, buffer);
-        //checking if there are more entries than col
-        char * cmdCopy = cmd;
-        char * database;
-        database = strsep(&cmdCopy," ");
-        database = strsep(&cmdCopy," ");
-        char * entryCheck = buffer;
-        int entryNum = 0; 
-        FILE* fp = fopen(database, "r");
-        if (fp == NULL) { // database does not exist
-            printf("[Error] Database does not exist");
-            return;
-        }
-        char * column;
-        fgets(column,sizeof(column),fp);
-        while (strsep(&column,",") != NULL){
-            entryNum++;
-        }
-        printf("%d",entryNum);
+        // strcat(cmd, " ");
+        // strcat(cmd, buffer);
+        // //checking if there are more entries than col
+        // char * cmdCopy;
+        // strcpy(cmdCopy,cmd);
+        // char * database;
+        // database = strsep(&cmdCopy," ");
+        // database = strsep(&cmdCopy," ");
+        // char * entryCheck;
+        // strcpy(entryCheck,buffer);
+        // int entryNum = 0; 
+        // FILE* fp = fopen(database, "r");
+        // if (fp == NULL) { // database does not exist
+        //     printf("[Error] Database does not exist");
+        //     return;
+        // }  
+        // char * column;
+        // fgets(column,sizeof(column),fp);
+        // while (strsep(&column,",") != NULL){
+        //     entryNum++;
+        // }
+        // printf("%d",entryNum);
 
 
         //strcpy(data->entry, strsep(&buffer, " "));

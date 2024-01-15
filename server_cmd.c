@@ -4,8 +4,10 @@
 #include <fcntl.h>
 #include <string.h>
 #include <ctype.h> 
+#include <sys/sem.h>
 
 #include "server_cmd.h"
+#include "networking.h"
 #define MAX 256
 
 //______________________________DATABASE_MANIPULATION______________________________

@@ -13,9 +13,9 @@ client.o: client.c
 networking.o: networking.c networking.h
 	@gcc -c networking.c 
 # client and server commands
-client_cmd.o: client_cmd.c client_cmd.h
+client_cmd.o: client_cmd.c client_cmd.h networking.h
 	@gcc -c client_cmd.c
-server_cmd.o: server_cmd.c server_cmd.h
+server_cmd.o: server_cmd.c server_cmd.h networking.h
 	@gcc -c server_cmd.c
 
 # select test
