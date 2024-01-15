@@ -141,6 +141,11 @@ void cedit_data(int server_socket, char* input) {
     
     // server returns "Edit successful!"
     read(server_socket, buffer, sizeof(buffer));
+    int semd;
+    struct sembuf sb;
+    semd = semget(KEY, 1, 0);//Gets semaphore
+    sb.sem_op = 1; //Upping value of semaphore to indicate another program can use it
+    semop(semd, &sb, 1);
     printf("%s\n", buffer);
 }
 // helper functions

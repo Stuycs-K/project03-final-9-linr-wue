@@ -96,3 +96,8 @@
 40 min - started working on the sort data function, currently getting error with placing all of the data from data file into an array of strings to do selection sort; discussed our next and final steps: finishing sort, adding restrictions to number of entries user can add, being able to create a data file
 
 ### 2024-01-13 - Didn't work on project
+
+### 2024-01-14 - Worked on entry restrictions
+
+40 min - worked on creating a check on the number of entries a user can add but i keep getting segfaults and a bunch of debugging doesn't work so I will come back to it
+
