@@ -115,3 +115,5 @@
 ### 2024-01-14 - Worked on documentation
 
 30 min - worked on documentation and editing the readme
+
+15 min - worked on entries restrictions but I keep getting a segfault whenever I strsep
