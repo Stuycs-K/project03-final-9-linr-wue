@@ -107,20 +107,25 @@ void cedit_data(int server_socket, char* input) {
         strcat(cmd, " ");
         strcat(cmd, buffer);
         // //checking if there are more entries than col
-        // char * cmdCopy;
-        // strcpy(cmdCopy,cmd);
-        // char * database;
-        // database = strsep(&cmdCopy," ");
-        // database = strsep(&cmdCopy," ");
-        // char * entryCheck;
-        // strcpy(entryCheck,buffer);
+        //char * cmdCopy;
+        //strcpy(cmdCopy,cmd);
+        //char * database = strsep(&cmdCopy," ");
+        //printf("\n%s",database);
+        //database = strsep(&cmdCopy," ");
+        char * entryCheck;
+        strcpy(entryCheck,buffer);
+        int inputNum = 0;
+        // while (strsep(&entryCheck,",") != NULL){
+        //     inputNum++;
+        // }
+        printf("%d",inputNum);
         // int entryNum = 0; 
         // FILE* fp = fopen(database, "r");
         // if (fp == NULL) { // database does not exist
         //     printf("[Error] Database does not exist");
         //     return;
         // }  
-        // char * column;
+        //char * column;
         // fgets(column,sizeof(column),fp);
         // while (strsep(&column,",") != NULL){
         //     entryNum++;
