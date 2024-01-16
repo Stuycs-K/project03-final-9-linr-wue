@@ -112,13 +112,13 @@ void cedit_data(int server_socket, char* input) {
         //char * database = strsep(&cmdCopy," ");
         //printf("\n%s",database);
         //database = strsep(&cmdCopy," ");
-        char * entryCheck;
-        strcpy(entryCheck,buffer);
-        int inputNum = 0;
+        // char * entryCheck;
+        // strcpy(entryCheck,buffer);
+        // int inputNum = 0;
         // while (strsep(&entryCheck,",") != NULL){
         //     inputNum++;
         // }
-        printf("%d",inputNum);
+        // printf("%d",inputNum);
         // int entryNum = 0; 
         // FILE* fp = fopen(database, "r");
         // if (fp == NULL) { // database does not exist
@@ -131,9 +131,6 @@ void cedit_data(int server_socket, char* input) {
         //     entryNum++;
         // }
         // printf("%d",entryNum);
-
-
-        //strcpy(data->entry, strsep(&buffer, " "));
     }
     // edit database_name operation -option col row a,b,c,d
     printf("%s\n", cmd);
