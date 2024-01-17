@@ -4,11 +4,8 @@
 #include <fcntl.h>
 #include <string.h>
 #include <ctype.h> 
-<<<<<<< HEAD
 #include <errno.h> 
-=======
 #include <sys/sem.h>
->>>>>>> main
 
 #include "server_cmd.h"
 #include "networking.h"
