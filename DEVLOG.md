@@ -103,3 +103,11 @@
 40 min - started working on the sort data function, currently getting error with placing all of the data from data file into an array of strings to do selection sort; discussed our next and final steps: finishing sort, adding restrictions to number of entries user can add, being able to create a data file
 
 ### 2024-01-13 - Didn't work on project
+
+### 2024-01-14 - Worked on entry restrictions, fixing sem bug
+
+40 min - worked on creating a check on the number of entries a user can add but i keep getting segfaults and a bunch of debugging doesn't work so I will come back to it
+
+20 min - fixed semaphore bug that didn't up the semaphore after its usage (almost), there are still a ton of bugs regarding that issue
+
+30 min - FINALLY FIXED SEMAPHORE BUG, worked on commenting out code that i will remove later, and changing just a little of the readme that will be polished tomorrow

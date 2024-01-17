@@ -13,9 +13,9 @@ client.o: client.c
 networking.o: networking.c networking.h
 	@gcc -c networking.c 
 # client and server commands
-client_cmd.o: client_cmd.c client_cmd.h
+client_cmd.o: client_cmd.c client_cmd.h networking.h
 	@gcc -c client_cmd.c
-server_cmd.o: server_cmd.c server_cmd.h
+server_cmd.o: server_cmd.c server_cmd.h networking.h
 	@gcc -c server_cmd.c
 
 # select test
@@ -27,22 +27,6 @@ selectclient: selectclient.o networking.o client_cmd.o
 	@gcc -o selectclient1 selectclient.o networking.o client_cmd.o
 selectclient.o: selectclient.c 
 	@gcc -c selectclient.c 
-
-# semaphore test
-# semControl: semControl.o 
-# 	@gcc -o semControl sem.c 
-# semControl.o: sem.c 
-# 	@gcc -c sem.c
-# control: semControl
-# 	@./semControl $(ARGS)
-# semWrite: semWrite.o
-# 	@gcc -o semWrite semusertest.c
-# semWrite.o: semusertest.c
-# 	@gcc -c semusertest.c
-# write: semWrite
-# 	@./semWrite
-# sem.o: sem.c
-# 	@gcc -c sem.c
 
 clean:
 	@rm -f *.o server client select selectclient1 2> /dev/null || true

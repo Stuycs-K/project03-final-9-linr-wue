@@ -88,7 +88,7 @@ int server_setup() {
     r = semctl(semd, 0, SETVAL, us);
     //printf("semctl returned: %d\n", r); //setting semaphore value to 1
   }
-  int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Creating the shared memory
+  //int shmid = shmget(SHMKEY, sizeof(int), IPC_CREAT | 0640); //Creating the shared memory
   
   printf("Server started!\n");
   

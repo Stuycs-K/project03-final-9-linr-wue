@@ -26,8 +26,8 @@ static void sighandler(int signo) {
       char data[128];
       int bytes; 
       int semd = semget(KEY, 1, 0); //Getting value of semaphore
-      int shmid = shmget(SHMKEY, 0, 0); //Getting value of shared memory
-      shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
+      //int shmid = shmget(SHMKEY, 0, 0); //Getting value of shared memory
+      //shmctl(shmid, IPC_RMID, 0); //Removing the shared memory
       semctl(semd, IPC_RMID, 0); //Removing the semaphore
       //printf("Segment Deleted\n");
       exit(0);

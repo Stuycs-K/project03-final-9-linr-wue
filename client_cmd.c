@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <sys/sem.h>
 
 #include "networking.h"
 #include "client_cmd.h"
@@ -105,6 +106,28 @@ void cedit_data(int server_socket, char* input) {
         rm_newline(buffer);
         strcat(cmd, " ");
         strcat(cmd, buffer);
+        // //checking if there are more entries than col
+        // char * cmdCopy;
+        // strcpy(cmdCopy,cmd);
+        // char * database;
+        // database = strsep(&cmdCopy," ");
+        // database = strsep(&cmdCopy," ");
+        // char * entryCheck;
+        // strcpy(entryCheck,buffer);
+        // int entryNum = 0; 
+        // FILE* fp = fopen(database, "r");
+        // if (fp == NULL) { // database does not exist
+        //     printf("[Error] Database does not exist");
+        //     return;
+        // }  
+        // char * column;
+        // fgets(column,sizeof(column),fp);
+        // while (strsep(&column,",") != NULL){
+        //     entryNum++;
+        // }
+        // printf("%d",entryNum);
+
+
         //strcpy(data->entry, strsep(&buffer, " "));
     }
     // edit database_name operation -option col row a,b,c,d
@@ -114,6 +137,12 @@ void cedit_data(int server_socket, char* input) {
     // server returns "Edit successful!"
     read(server_socket, buffer, sizeof(buffer));
     printf("%s\n", buffer);
+
+    int semd;
+    struct sembuf sb;
+    semd = semget(KEY, 1, 0);//Gets semaphore
+    sb.sem_op = 1; //Upping value of semaphore to indicate another program can use it
+    semop(semd, &sb, 1);
 }
 // helper functions
 void rm_newline(char* s) {
