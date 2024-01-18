@@ -4,8 +4,8 @@
 #include <fcntl.h>
 #include <string.h>
 #include <ctype.h> 
-#include <sys/sem.h>
 #include <errno.h> 
+#include <sys/sem.h>
 
 #include "server_cmd.h"
 #include "networking.h"
@@ -53,6 +53,12 @@ void sedit_data(int client_socket, char** cmd) {
     msg[0] = '\0';
     if (fp == NULL) { // database does not exist
         strcat(msg, "[Error] Database does not exist");
+
+        int semd;
+        struct sembuf sb;
+        semd = semget(KEY, 1, 0);//Gets semaphore
+        sb.sem_op = 1; //Upping value of semaphore to indicate another program can use it
+        semop(semd, &sb, 1);
         
         write(client_socket, msg, sizeof(msg)); // write error to client
         return;
@@ -66,7 +72,7 @@ void sedit_data(int client_socket, char** cmd) {
         else if (strcmp(cmd[3], "-row") == 0) {
             // edit database_name add -row row_num a,b,c,d
             add_row(cmd);
-            ssort_data(client_socket,cmd);
+            // ssort_data(client_socket,cmd);
         }
     }
     else if (strcmp(cmd[2], "update") == 0) {
@@ -112,7 +118,7 @@ void add_row(char** cmd) {
     char temp[MAX];
     for (int r = 1; r < row; r++) { // skips the rows before target
         fgets(temp, MAX, old);
-        printf("\t%s", temp);
+        // printf("\t%s", temp);
         fputs(temp, new);
     }
     // adding new row
