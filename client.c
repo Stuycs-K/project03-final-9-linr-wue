@@ -54,7 +54,7 @@ void clientLogic(int server_socket){
   char temp[MAX];
   char* c = temp;
   strcpy(temp, msgToSend);
-  char* first_cmd = strsep(&c, " ");
+  char* first_cmd = strsep(&c, " \n");
 
   //Making a struct
   // struct pop_entry *clientStruct = malloc(sizeof(struct pop_entry) * 1);
@@ -77,6 +77,15 @@ void clientLogic(int server_socket){
     accessSem();
     csort_data(server_socket, msgToSend);
     upSem();
+  }
+  else if (strcmp(first_cmd, "create") == 0) {
+    ccreate(server_socket, msgToSend);
+  }
+  else if (strcmp(first_cmd, "remove") == 0) {
+    cremove(server_socket, msgToSend);
+  }
+  else if (strcmp(first_cmd, "list") == 0) {
+    clist(server_socket, msgToSend);
   }
   else{
     printf("[Error] Command not found\n");

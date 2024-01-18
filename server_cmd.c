@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ctype.h> 
 #include <sys/sem.h>
+#include <errno.h> 
 
 #include "server_cmd.h"
 #include "networking.h"
@@ -52,12 +53,6 @@ void sedit_data(int client_socket, char** cmd) {
     msg[0] = '\0';
     if (fp == NULL) { // database does not exist
         strcat(msg, "[Error] Database does not exist");
-
-        int semd;
-        struct sembuf sb;
-        semd = semget(KEY, 1, 0);//Gets semaphore
-        sb.sem_op = 1; //Upping value of semaphore to indicate another program can use it
-        semop(semd, &sb, 1);
         
         write(client_socket, msg, sizeof(msg)); // write error to client
         return;
@@ -292,12 +287,12 @@ void ssort_data(int client_socket, char** cmd) {
                 }
             }
             else { // string cells
-                if (strcmp(cmd[2], "<") == 0 && strcmp(min_cell, cur_cell) > 0) { // smallest to largest
+                if (strcmp(cmd[2], ">") == 0 && strcmp(min_cell, cur_cell) > 0) { // A to Z
                 strcpy(min, cur_row);
                 strcpy(min_cell, find_cell(min, col));
                 min_row = r;
                 }
-                else if (strcmp(cmd[2], ">") == 0 && strcmp(min_cell, cur_cell) < 0) { // largest to smallest
+                else if (strcmp(cmd[2], "<") == 0 && strcmp(min_cell, cur_cell) < 0) { // Z to A
                     strcpy(min, cur_row);
                     strcpy(min_cell, find_cell(min, col));
                     min_row = r;
@@ -344,3 +339,66 @@ int is_number(char* cell) {
     return 1; // true
 }
 //______________________________FILE_MANIPULATION______________________________
+// create database
+void screate(int client_socket, char** cmd) {
+    // create name
+    char msg[64];
+    msg[0] = '\0';
+    int fd = open(cmd[1], O_CREAT | O_EXCL, 0744);
+    if (errno == EEXIST) {
+        strcat(msg, "[Error] Database with the same name already exists");
+    }
+    else if (fd == -1) {
+        strcat(msg, "[Error] Creating database unsuccessful");
+    }
+    else {
+        strcat(msg, "Database successfully created!");
+    }
+    write(client_socket, msg, sizeof(msg));
+}
+
+// remove database
+void sremove(int client_socket, char** cmd) {
+    // remove name
+    char msg[64];
+    msg[0] = '\0';
+    int n = remove(cmd[1]);
+    if (errno == EBUSY) {
+        strcat(msg, "[Error] Database is currently in use");
+    }
+    else if (errno == ENOENT) {
+        strcat(msg, "[Error] Invalid database name");
+    }
+    else if (n == -1) {
+        strcat(msg, "[Error] Removing database unsuccessful");
+    }
+    else {
+        strcat(msg, "Database successfully removed!");
+    }
+    write(client_socket, msg, sizeof(msg));
+}
+
+// list all database
+void slist(int client_socket, char* cmd) {
+    // find number of lines in ls stdout
+    FILE* fp = popen(cmd, "r");
+    int n = 0;
+    for (char c = getc(fp); c != EOF; c = getc(fp)) {
+        if (c == '\n') {
+            n++;
+        }
+    }
+    pclose(fp);
+    char buffer[MAX];
+    sprintf(buffer, "%d", n);
+    write(client_socket, buffer, sizeof(buffer)); // write to client number of lines
+    usleep(250);
+    // write to client line by line
+    fp = popen(cmd, "r");
+    while (fgets(buffer, MAX, fp) != NULL) {
+        write(client_socket, buffer, sizeof(buffer));
+        usleep(250);
+    }
+    pclose(fp);
+}
+//______________________________OTHER______________________________
