@@ -30,20 +30,26 @@ The client will connect to the server and will ask for a command.
 
 ## Creating a data file
 
-If the user wants to create a data file, they should type "read (file_name)" in the terminal. 
+If the user wants to create a data file, they should type "create (file_name)" in the terminal. 
 
 ## Deleting a data file
 
-If the user wants to delete a data file, they should type "read (file_name)" in the terminal. 
+If the user wants to delete a data file, they should type "remove (file_name)" in the terminal. 
 
 ## Reading the data file
 
 If the user wants to view the data file, they should type "read (file_name)" in the terminal. 
 
+## Listing files in directory
+
+If the user wants to list all the files, they should type "list (< or >)" in the terminal. 
+
+The other listing functions are "list moddate (< or >)" and "list size (< or >)". The user can also add "-l" after "list".
+
 ## Sorting the data
 
-If the user wants to sort the data file, they should type "sort (file_name) (>/<)" in the terminal. 
-Then, the user will be prompted to type the column they want to sort the data by.
+If the user wants to sort the data file, they should type "sort (file_name) (< or >)" in the terminal. 
+Then, the user will be prompted to type the column they want to sort the data by, which should be the integer value shown in reading the data.
 
 ## Editing the data file
 
@@ -52,11 +58,11 @@ Then, the user will be prompted to enter the change they want to make.
 
 ## The edit commands
 
-The three main edit commands are: adding a row, deleting a row/column or cell, and updating a row/column/cell. 
+The three main edit commands are: adding a row, deleting a row/cell, and updating a row/cell. 
 
 ## Syntax
 
-The general syntax for rows/col would be **"(operation) -(row/col) (row/col #)"**.
+The general syntax for rows would be **"(operation) -row (row #)"**.
 
 The general syntax for a cell would be **"(operation) -cel (col #) (row #)"**.
 
@@ -69,15 +75,15 @@ The user will then be prompted to add the entries for the row and fill out an en
 They should then type in the entries with commas in between and no spaces. 
 For example, if there are 5 columns, the entries to be added would be "a,b,c,d,e". 
 
-## Deleting a row/column/cell
+## Deleting a row//cell
 
-To delete a row/column: the syntax would be **"delete -(row/col) (row/col #)"**. This will delete the row or column.
+To delete a row/column: the syntax would be **"delete -row (row #)"**. This will delete the row or column.
 
 To delete a cell, just apply the syntax for a cell.
 
-## Updating a row/column/cell
+## Updating a row/cell
 
-To update a row/column: the syntax would be **"update -(row/col) (row/col #)"**. The user will then be prompted to add the entries for the row. The user will have to fill out an entire row for the data. 
+To update a row/column: the syntax would be **"update -(row) (row #)"**. The user will then be prompted to add the entries for the row. The user will have to fill out an entire row for the data. 
 They should then type in the entries with commas in between and no spaces. 
 
 To update a cell, just apply the syntax for a cell and only type one entry.
