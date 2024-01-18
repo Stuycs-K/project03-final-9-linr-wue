@@ -40,7 +40,7 @@ void upSem(){
   int semd;
   struct sembuf sb;
   semd = semget(KEY, 1, 0);//Gets semaphore
-
+  sb.sem_num = 0;
   sb.sem_op = 1; //Upping value of semaphore to indicate another program can use it
   semop(semd, &sb, 1);
 }
