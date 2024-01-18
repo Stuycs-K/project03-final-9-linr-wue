@@ -72,7 +72,7 @@ void sedit_data(int client_socket, char** cmd) {
         else if (strcmp(cmd[3], "-row") == 0) {
             // edit database_name add -row row_num a,b,c,d
             add_row(cmd);
-            ssort_data(client_socket,cmd);
+            // ssort_data(client_socket,cmd);
         }
     }
     else if (strcmp(cmd[2], "update") == 0) {
@@ -118,7 +118,7 @@ void add_row(char** cmd) {
     char temp[MAX];
     for (int r = 1; r < row; r++) { // skips the rows before target
         fgets(temp, MAX, old);
-        printf("\t%s", temp);
+        // printf("\t%s", temp);
         fputs(temp, new);
     }
     // adding new row

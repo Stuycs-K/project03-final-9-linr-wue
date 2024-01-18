@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
-#include <sys/sem.h>
 
 #include "networking.h"
 #include "client_cmd.h"
@@ -106,43 +105,15 @@ void cedit_data(int server_socket, char* input) {
         rm_newline(buffer);
         strcat(cmd, " ");
         strcat(cmd, buffer);
-        // //checking if there are more entries than col
-        // char * cmdCopy;
-        // strcpy(cmdCopy,cmd);
-        // char * database;
-        // database = strsep(&cmdCopy," ");
-        // database = strsep(&cmdCopy," ");
-        // char * entryCheck;
-        // strcpy(entryCheck,buffer);
-        // int entryNum = 0; 
-        // FILE* fp = fopen(database, "r");
-        // if (fp == NULL) { // database does not exist
-        //     printf("[Error] Database does not exist");
-        //     return;
-        // }  
-        // char * column;
-        // fgets(column,sizeof(column),fp);
-        // while (strsep(&column,",") != NULL){
-        //     entryNum++;
-        // }
-        // printf("%d",entryNum);
-
-
         //strcpy(data->entry, strsep(&buffer, " "));
     }
     // edit database_name operation -option col row a,b,c,d
-    printf("%s\n", cmd);
+    // printf("%s\n", cmd);
     write(server_socket, cmd, sizeof(cmd));
     
     // server returns "Edit successful!"
     read(server_socket, buffer, sizeof(buffer));
     printf("%s\n", buffer);
-
-    int semd;
-    struct sembuf sb;
-    semd = semget(KEY, 1, 0);//Gets semaphore
-    sb.sem_op = 1; //Upping value of semaphore to indicate another program can use it
-    semop(semd, &sb, 1);
 }
 // helper functions
 void rm_newline(char* s) {
@@ -173,7 +144,7 @@ void csort_data(int server_socket, char* input) {
     strcat(cmd, buffer);
 
     // sort database_name order col_num
-    printf("%s\n", cmd);
+    // printf("%s\n", cmd);
     write(server_socket, cmd, sizeof(cmd));
 
     read(server_socket, buffer, sizeof(buffer));
@@ -184,7 +155,7 @@ void csort_data(int server_socket, char* input) {
 void ccreate(int server_socket, char* input) {
     rm_newline(input);
     // create database_name
-    printf("%s\n", input);
+    // printf("%s\n", input);
     write(server_socket, input, strlen(input) + 1);
 
     char buffer[MAX];
@@ -196,7 +167,7 @@ void ccreate(int server_socket, char* input) {
 void cremove(int server_socket, char* input) {
     rm_newline(input);
     // remove database_name
-    printf("%s\n", input);
+    // printf("%s\n", input);
     write(server_socket, input, strlen(input) + 1);
 
     char buffer[MAX];
@@ -243,7 +214,7 @@ void clist(int server_socket, char* input) {
     // list -l moddate order -> ls -l (-r)
     // list size order -> ls -S (-r)
     // list -l size order -> ls -S -l (-r)
-    printf("%s\n", cmd);
+    // printf("%s\n", cmd);
     write(server_socket, cmd, sizeof(cmd));
 
     char buffer[MAX];
